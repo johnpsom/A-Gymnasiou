@@ -20,6 +20,7 @@
 \RequirePackage{tikz}
 \usetikzlibrary{arrows.meta,calc,patterns,positioning}
 \RequirePackage{amsmath}
+\RequirePackage{cancel}
 \RequirePackage{icomma}      % δεκαδικό κόμμα χωρίς κενό στα μαθηματικά
 \RequirePackage{microtype}
 \RequirePackage{needspace}
@@ -184,3 +185,11 @@
 
 \newfontfamily\archaicfont{FreeSerif}
 \newcommand{\arch}[1]{{\archaicfont #1}}
+
+% ράβδος κλάσματος: \barfig{ν}{κ} = ορθογώνιο χωρισμένο σε ν ίσα μέρη, χρωματισμένα τα κ πρώτα
+\newcommand{\barfig}[2]{\begin{tikzpicture}[baseline=-0.4ex]%
+  \fill[gblue!30] (0,0) rectangle ({#2*2.4/#1},0.42);%
+  \foreach \i in {1,...,#1}{\draw ({\i*2.4/#1},0)--({\i*2.4/#1},0.42);}%
+  \draw[thick] (0,0) rectangle (2.4,0.42);\end{tikzpicture}}
+
+\renewcommand{\frac}{\dfrac}
