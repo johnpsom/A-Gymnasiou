@@ -46,34 +46,52 @@
 \definecolor{gwarm}{HTML}{FFF3E0}
 \definecolor{gwarmD}{HTML}{B5651D}
 
-% ---------- κεφάλαια ----------
+% ---------- δομή: Μέρος, Κεφάλαιο, Παράγραφος ----------
 \renewcommand{\thechapter}{\arabic{chapter}}
+\renewcommand{\thesection}{\arabic{section}}
+\newcommand{\partpfx}{}
 \newcommand{\chaptertitlefont}{\bfseries\fontsize{19}{24}\selectfont}
 \titleformat{\chapter}[block]{\normalfont}{}{0pt}{}
 \titlespacing*{\chapter}{0pt}{0pt}{0pt}
+
+% \meros{Α}{ΑΡΙΘΜΗΤΙΚΗ – ΑΛΓΕΒΡΑ}: σελίδα μέρους. Τα κεφάλαια ξεκινούν πάλι από το 1.
+\newcommand{\meros}[3]{%
+  \cleardoublepage\thispagestyle{empty}\setcounter{chapter}{0}%
+  \renewcommand{\partpfx}{#3}%
+  \addcontentsline{toc}{part}{Μέρος #1΄: #2}%
+  \vspace*{50mm}%
+  {\color{gblue}\bfseries\Large Μέρος #1΄}\par\vspace{3mm}
+  {\raggedright\bfseries\fontsize{26}{32}\selectfont #2\par}
+  \clearpage}
+
+% \kefalaio{τίτλος}{μότο}{λίστα παραγράφων}: σελίδα κεφαλαίου
 \newcommand{\kefalaio}[3]{%
-  % #1 τίτλος, #2 παραπομπή στο Σχολικό Βιβλίο
-  \clearpage
-  \refstepcounter{chapter}%
-  \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
+  \clearpage\thispagestyle{empty}\refstepcounter{chapter}\setcounter{section}{0}%
+  \addcontentsline{toc}{chapter}{Κεφάλαιο \partpfx\thechapter: #1}%
   \markboth{#1}{#1}%
-  \setcounter{exer}{0}\setcounter{paradeigma}{0}\renewcommand{\exprefix}{\thechapter}%
+  \vspace*{40mm}%
+  {\color{gblue}\bfseries\Large Κεφάλαιο \partpfx\thechapter}\par\vspace{3mm}
+  {\raggedright\bfseries\fontsize{24}{30}\selectfont #1\par}\vspace{6mm}
+  {\color{ggray}\itshape\large «#2»\par}\vspace{14mm}
+  {\color{gblue}\bfseries Στο κεφάλαιο αυτό\par}\vspace{1ex}
+  {\small #3\par}
+  \clearpage}
+
+% \paragrafos{τίτλος}{παραπομπή}: παράγραφος (υποενότητα) του κεφαλαίου
+\newcommand{\paragrafos}[2]{%
+  \clearpage\refstepcounter{section}%
+  \addcontentsline{toc}{section}{\protect\numberline{\partpfx\thechapter.\thesection}#1}%
+  \markboth{\partpfx\thechapter.\thesection\ #1}{\partpfx\thechapter.\thesection\ #1}%
+  \setcounter{exer}{0}\setcounter{paradeigma}{0}\renewcommand{\exprefix}{\partpfx\thechapter.\thesection}%
   \vspace*{14mm}%
-  {\color{gblue}\bfseries\large Κεφάλαιο \thechapter}\par\vspace{3mm}
+  {\color{gblue}\bfseries\large Παράγραφος \partpfx\thechapter.\thesection}\par\vspace{3mm}
   {\raggedright\chaptertitlefont #1\par}\vspace{5mm}
   {\color{ggray}\small Σχολικό βιβλίο: #2\par}\vspace{6mm}
 }
-\newcommand{\enotita}[3]{%
-  % #1 αριθμός, #2 τίτλος, #3 υπότιτλος
-  \cleardoublepage
-  \thispagestyle{empty}
-  \addcontentsline{toc}{part}{Ενότητα #1: #2}
-  \vspace*{50mm}
-  {\color{gblue}\bfseries\Large Ενότητα #1}\par\vspace{3mm}
-  {\bfseries\fontsize{26}{32}\selectfont #2\par}\vspace{8mm}
-  {\color{ggray}\itshape\large «#3»\par}
-  \clearpage
-}
+
+% \ypotmima{Α}{τίτλος}: υποδιαίρεση μιας μεγάλης παραγράφου (η αρίθμηση ασκήσεων συνεχίζεται)
+\newcommand{\ypotmima}[2]{\par\Needspace{10\baselineskip}\vspace{2.5ex}%
+  {\color{gblue}\bfseries\Large #1.\ #2}\par\vspace{0.3ex}{\color{gblue}\hrule height 0.8pt}\vspace{1.5ex}\par}
 
 % ---------- τίτλοι ενοτήτων μέσα στο κεφάλαιο ----------
 \newcommand{\tmima}[1]{\par\Needspace{6\baselineskip}\vspace{1.2ex}{\color{gblue}\bfseries\large #1}\par\nopagebreak\vspace{0.4ex}}
@@ -117,10 +135,10 @@
 % ---------- λυμένα παραδείγματα ----------
 \newcounter{paradeigma}
 \newcounter{exer}
-\newcommand{\exprefix}{\thechapter}
+\newcommand{\exprefix}{}
 \newcommand{\paradeigma}[1]{%
   \refstepcounter{paradeigma}%
-  \par\vspace{1ex}\noindent\textbf{Παράδειγμα \thechapter.\theparadeigma\enspace #1}\par\nopagebreak}
+  \par\vspace{1ex}\noindent\textbf{Παράδειγμα \exprefix.\theparadeigma\enspace #1}\par\nopagebreak}
 \newcommand{\tixero}{\textbf{Τι ξέρω.}\ }
 \newcommand{\tithelo}{\textbf{Τι θέλω.}\ }
 \newcommand{\possindeo}{\textbf{Πώς τα συνδέω.}\ }
@@ -131,14 +149,18 @@
 \newcommand{\zoni}[2]{\par\Needspace{6\baselineskip}\vspace{1.4ex}\noindent{\color{gblue}\bfseries\large #1}\hspace{1.2em}{\color{ggray}\small #2}\par\nopagebreak\vspace{0.4ex}}
 \newcommand{\ex}[1][]{%
   \refstepcounter{exer}%
-  \par\vspace{0.5ex}\noindent\hangindent=2.9em\hangafter=1
-  \hbox to 2.9em{\color{gblue}\bfseries\exprefix.\theexer\hfill}\hspace{0pt}%
+  \par\vspace{0.5ex}\noindent\hangindent=3.6em\hangafter=1
+  \hbox to 3.6em{\color{gblue}\bfseries\exprefix.\theexer\hfill}\hspace{0pt}%
   \ifx&#1&\else{\bfseries #1\ }\fi}
 \newcommand{\sub}[1]{\ #1}
 
 % ---------- λύσεις ----------
-\newcommand{\lyseis}[2]{\setcounter{chapter}{#1}\par\vspace{1.5ex}\noindent{\color{gblue}\bfseries\large Κεφάλαιο #1: #2}\par\nopagebreak\vspace{0.3ex}}
-\newcommand{\sol}[1]{\par\vspace{0.35ex}\noindent\textbf{\thechapter.#1}\enspace}
+\newcommand{\solprefix}{}
+\newcommand{\lyseismeros}[2]{\par\Needspace{8\baselineskip}\vspace{3ex}{\color{gblue}\bfseries\Large Μέρος #1΄: #2}\par\vspace{1ex}}
+\newcommand{\lyseiskef}[2]{\par\Needspace{6\baselineskip}\vspace{2.5ex}{\color{gblue}\bfseries\large Κεφάλαιο #1: #2}\par\vspace{0.5ex}}
+\newcommand{\lyseis}[2]{\renewcommand{\solprefix}{#1}\par\Needspace{4\baselineskip}\vspace{1.5ex}\noindent{\bfseries Παράγραφος #1\enspace #2}\par\nopagebreak\vspace{0.3ex}}
+\newcommand{\lyseisE}[1]{\par\Needspace{4\baselineskip}\vspace{1.5ex}\noindent{\bfseries #1}\par\nopagebreak\vspace{0.3ex}}
+\newcommand{\sol}[1]{\par\vspace{0.35ex}\noindent\textbf{\solprefix.#1}\enspace}
 \newcommand{\solr}[2]{\par\vspace{0.35ex}\noindent\textbf{Ε#1.#2}\enspace}
 
 % ---------- κεφαλίδες ----------
@@ -159,3 +181,6 @@
 \newcommand{\mn}[1]{\textcolor{gblue}{\bfseries #1}}
 \newcommand{\kouti}{\fbox{\rule{0pt}{1.1ex}\hspace{1.1ex}}}
 \providecommand{\square}{\mathord{\mdlgwhtsquare}}
+
+\newfontfamily\archaicfont{FreeSerif}
+\newcommand{\arch}[1]{{\archaicfont #1}}

@@ -2,7 +2,7 @@
 % Μεταγλώττιση: xelatex teyxos_a.tex (δύο φορές, για το περιεχόμενο)
 \documentclass[11pt,twoside,openright]{book}
 \usepackage{glossa}
-\hypersetup{pdftitle={Μαθηματικά Α' Γυμνασίου, Τεύχος Α},pdfauthor={Ιωάννης Ψωμιάδης}}
+\hypersetup{pdftitle={Μαθηματικά Α' Γυμνασίου},pdfauthor={Ιωάννης Ψωμιάδης}}
 
 % ---------- περιεχόμενα ----------
 \usepackage{tocloft}
@@ -16,12 +16,13 @@
 \renewcommand{\cftpartpresnum}{}
 \renewcommand{\contentsname}{Περιεχόμενα}
 \renewcommand{\cftpartdotsep}{\cftnodots}
-\setcounter{tocdepth}{0}
+\setcounter{tocdepth}{1}
+\setlength{\cftsecindent}{1.5em}\setlength{\cftsecnumwidth}{2.8em}\renewcommand{\cftchapfont}{\bfseries}\renewcommand{\cftchappagefont}{\bfseries}\setlength{\cftbeforesecskip}{0.1em}
 \let\oldpart\part
-\newcommand{\epanalipsi}[1]{\clearpage\markboth{Επανάληψη ενότητας #1}{Επανάληψη ενότητας #1}%
-  \addcontentsline{toc}{chapter}{\hspace{1.5em}Επανάληψη ενότητας #1}%
+\newcommand{\epanalipsi}[1]{\clearpage\markboth{Επανάληψη κεφαλαίου #1}{Επανάληψη κεφαλαίου #1}%
+  \addcontentsline{toc}{section}{\protect\numberline{}Επανάληψη του κεφαλαίου}%
   \setcounter{exer}{0}\renewcommand{\exprefix}{Ε#1}\vspace*{14mm}{\color{gblue}\bfseries\large Επανάληψη}\par\vspace{3mm}%
-  {\chaptertitlefont Επανάληψη ενότητας #1\par}\vspace{6mm}}
+  {\raggedright\chaptertitlefont Επανάληψη κεφαλαίου #1\par}\vspace{6mm}}
 
 \begin{document}
 \frontmatter
@@ -31,7 +32,8 @@
 \mainmatter
 \pagestyle{fancy}
 \fancyhead[RO]{\color{ggray}\small\leftmark}
-\input{chapters/enotita1}
+\meros{Α}{ΑΡΙΘΜΗΤΙΚΗ – ΑΛΓΕΒΡΑ}{}
+\input{A/k1/kef1}
 
 \backmatter
 \cleardoublepage
@@ -39,5 +41,6 @@
 \markboth{Λύσεις}{Λύσεις}
 {\color{gblue}\bfseries\Large Λύσεις}\par\vspace{2mm}
 {\color{ggray}\small Κοίτα τες αφού προσπαθήσεις, όχι πριν.\par}
-\input{solutions/enotita1}
+\lyseismeros{Α}{ΑΡΙΘΜΗΤΙΚΗ – ΑΛΓΕΒΡΑ}
+\input{A/k1/lkef1}
 \end{document}
