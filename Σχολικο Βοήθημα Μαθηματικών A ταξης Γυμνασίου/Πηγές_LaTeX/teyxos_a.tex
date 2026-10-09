@@ -1,0 +1,43 @@
+% Μαθηματικά Α' Γυμνασίου -- Τεύχος Α
+% Μεταγλώττιση: xelatex teyxos_a.tex (δύο φορές, για το περιεχόμενο)
+\documentclass[11pt,twoside,openright]{book}
+\usepackage{glossa}
+\hypersetup{pdftitle={Μαθηματικά Α' Γυμνασίου, Τεύχος Α},pdfauthor={Ιωάννης Ψωμιάδης}}
+
+% ---------- περιεχόμενα ----------
+\usepackage{tocloft}
+\renewcommand{\cftpartfont}{\bfseries\color{gblue}}
+\renewcommand{\cftchapfont}{\normalfont}
+\renewcommand{\cftchappagefont}{\normalfont}
+\setlength{\cftbeforepartskip}{1.4em}
+\setlength{\cftbeforechapskip}{0.25em}
+\renewcommand{\cftdot}{.}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftpartpresnum}{}
+\renewcommand{\contentsname}{Περιεχόμενα}
+\renewcommand{\cftpartdotsep}{\cftnodots}
+\setcounter{tocdepth}{0}
+\let\oldpart\part
+\newcommand{\epanalipsi}[1]{\clearpage\markboth{Επανάληψη ενότητας #1}{Επανάληψη ενότητας #1}%
+  \addcontentsline{toc}{chapter}{\hspace{1.5em}Επανάληψη ενότητας #1}%
+  \setcounter{exer}{0}\renewcommand{\exprefix}{Ε#1}\vspace*{14mm}{\color{gblue}\bfseries\large Επανάληψη}\par\vspace{3mm}%
+  {\chaptertitlefont Επανάληψη ενότητας #1\par}\vspace{6mm}}
+
+\begin{document}
+\frontmatter
+\pagestyle{empty}
+\input{frontmatter}
+
+\mainmatter
+\pagestyle{fancy}
+\fancyhead[RO]{\color{ggray}\small\leftmark}
+\input{chapters/enotita1}
+
+\backmatter
+\cleardoublepage
+\addcontentsline{toc}{part}{Λύσεις}
+\markboth{Λύσεις}{Λύσεις}
+{\color{gblue}\bfseries\Large Λύσεις}\par\vspace{2mm}
+{\color{ggray}\small Κοίτα τες αφού προσπαθήσεις, όχι πριν.\par}
+\input{solutions/enotita1}
+\end{document}

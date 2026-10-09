@@ -1,0 +1,161 @@
+% glossa.sty -- στυλ της σειράς «Η Γλώσσα των Μαθηματικών»
+% Ίδια εμφάνιση με τα βιβλία Ε' και ΣΤ' Δημοτικού (σελίδα 170x240 mm, μπλε τόνος).
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{glossa}[2026/10/09 Η Γλώσσα των Μαθηματικών]
+
+\RequirePackage[paperwidth=170mm,paperheight=240mm,top=24mm,bottom=24mm,inner=22mm,outer=18mm,headheight=14pt,headsep=10mm]{geometry}
+\RequirePackage{fontspec}
+\RequirePackage{unicode-math}
+\RequirePackage{polyglossia}
+\setmainlanguage{greek}
+\setotherlanguage{english}
+\RequirePackage{xcolor}
+\RequirePackage{booktabs}
+\RequirePackage{array}
+\RequirePackage{enumitem}
+\RequirePackage{fancyhdr}
+\RequirePackage{titlesec}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\RequirePackage{tikz}
+\usetikzlibrary{arrows.meta,calc,patterns,positioning}
+\RequirePackage{amsmath}
+\RequirePackage{icomma}      % δεκαδικό κόμμα χωρίς κενό στα μαθηματικά
+\RequirePackage{microtype}
+\RequirePackage{needspace}
+\RequirePackage[hidelinks]{hyperref}
+
+% ---------- γραμματοσειρές ----------
+\defaultfontfeatures{Ligatures=TeX}
+\setmainfont{Commissioner-Regular.ttf}[Path=fonts/,BoldFont=Commissioner-Bold.ttf,ItalicFont=Commissioner-Italic.ttf,BoldItalicFont=Commissioner-BoldItalic.ttf]
+\setsansfont{Commissioner-Regular.ttf}[Path=fonts/,BoldFont=Commissioner-Bold.ttf,ItalicFont=Commissioner-Italic.ttf,BoldItalicFont=Commissioner-BoldItalic.ttf]
+\setmathfont{Latin Modern Math}
+\renewcommand{\familydefault}{\sfdefault}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\linespread{1.12}
+\raggedbottom
+\emergencystretch=3em
+\tolerance=1500
+
+% ---------- χρώματα ----------
+\definecolor{gblue}{HTML}{1F5FAF}
+\definecolor{gblueL}{HTML}{E4EEF9}
+\definecolor{gdark}{HTML}{2B2B2B}
+\definecolor{ggray}{HTML}{6E6E6E}
+\definecolor{gwarm}{HTML}{FFF3E0}
+\definecolor{gwarmD}{HTML}{B5651D}
+
+% ---------- κεφάλαια ----------
+\renewcommand{\thechapter}{\arabic{chapter}}
+\newcommand{\chaptertitlefont}{\bfseries\fontsize{19}{24}\selectfont}
+\titleformat{\chapter}[block]{\normalfont}{}{0pt}{}
+\titlespacing*{\chapter}{0pt}{0pt}{0pt}
+\newcommand{\kefalaio}[3]{%
+  % #1 τίτλος, #2 παραπομπή στο Σχολικό Βιβλίο
+  \clearpage
+  \refstepcounter{chapter}%
+  \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
+  \markboth{#1}{#1}%
+  \setcounter{exer}{0}\setcounter{paradeigma}{0}\renewcommand{\exprefix}{\thechapter}%
+  \vspace*{14mm}%
+  {\color{gblue}\bfseries\large Κεφάλαιο \thechapter}\par\vspace{3mm}
+  {\raggedright\chaptertitlefont #1\par}\vspace{5mm}
+  {\color{ggray}\small Σχολικό βιβλίο: #2\par}\vspace{6mm}
+}
+\newcommand{\enotita}[3]{%
+  % #1 αριθμός, #2 τίτλος, #3 υπότιτλος
+  \cleardoublepage
+  \thispagestyle{empty}
+  \addcontentsline{toc}{part}{Ενότητα #1: #2}
+  \vspace*{50mm}
+  {\color{gblue}\bfseries\Large Ενότητα #1}\par\vspace{3mm}
+  {\bfseries\fontsize{26}{32}\selectfont #2\par}\vspace{8mm}
+  {\color{ggray}\itshape\large «#3»\par}
+  \clearpage
+}
+
+% ---------- τίτλοι ενοτήτων μέσα στο κεφάλαιο ----------
+\newcommand{\tmima}[1]{\par\Needspace{6\baselineskip}\vspace{1.2ex}{\color{gblue}\bfseries\large #1}\par\nopagebreak\vspace{0.4ex}}
+\newcommand{\tmimasmall}[1]{\par\Needspace{4\baselineskip}\vspace{0.8ex}{\bfseries #1}\par\nopagebreak}
+
+% ---------- κουτιά ----------
+\newtcolorbox{anagkebox}{enhanced,breakable,colback=gblueL,colframe=gblueL,
+  boxrule=0pt,sharp corners,borderline west={3pt}{0pt}{gblue},
+  left=10pt,right=8pt,top=7pt,bottom=7pt,fontupper=\itshape\small\linespread{1.15}\selectfont}
+\newenvironment{anagke}{\tmima{Η ανάγκη}\begin{anagkebox}}{\end{anagkebox}}
+
+\newtcolorbox[]{lexibox}[1]{enhanced,breakable,colback=white,colframe=gblue,boxrule=0.6pt,arc=2pt,
+  title={#1},coltitle=white,colbacktitle=gblue,fonttitle=\bfseries\small,
+  left=8pt,right=8pt,top=6pt,bottom=6pt}
+\newenvironment{lexi}[2]{\tmima{Η λέξη: #1}\begin{lexibox}{Η λέξη: #2}}{\end{lexibox}}
+
+\newtcolorbox{kanonasbox}[1]{enhanced,breakable,colback=gblueL!35,colframe=gdark,boxrule=0.6pt,arc=2pt,
+  title={#1},coltitle=white,colbacktitle=gdark,fonttitle=\bfseries\small,
+  left=8pt,right=8pt,top=6pt,bottom=6pt}
+\newenvironment{kanonas}[1]{\begin{kanonasbox}{Κανόνας: #1}}{\end{kanonasbox}}
+\newenvironment{orismos}[1]{\begin{kanonasbox}{Ορισμός: #1}}{\end{kanonasbox}}
+\newenvironment{idiotita}[1]{\begin{kanonasbox}{Ιδιότητα: #1}}{\end{kanonasbox}}
+
+\newtcolorbox{prosoxibox}[1]{enhanced,breakable,colback=gwarm,colframe=gwarmD,boxrule=0.6pt,arc=2pt,
+  title={#1},coltitle=white,colbacktitle=gwarmD,fonttitle=\bfseries\small,
+  left=8pt,right=8pt,top=6pt,bottom=6pt}
+\newenvironment{prosoxi}[1][Προσοχή: συνηθισμένο λάθος]{\begin{prosoxibox}{#1}}{\end{prosoxibox}}
+
+\newcommand{\lexiword}[1]{\textbf{#1}}
+
+% ---------- πίνακας «Η μετάφραση» ----------
+\newenvironment{metafrasi}{%
+  \tmima{Η μετάφραση}\par\vspace{-0.3em}
+  \renewcommand{\arraystretch}{1.55}
+  \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}} >{\raggedright\arraybackslash}p{0.5\linewidth} >{\centering\arraybackslash}p{0.38\linewidth}}
+  \toprule
+  \textbf{Στα ελληνικά} & \textbf{Στα μαθηματικά}\\
+  \midrule
+}{\bottomrule\end{tabular*}\par\vspace{0.3em}}
+
+% ---------- λυμένα παραδείγματα ----------
+\newcounter{paradeigma}
+\newcounter{exer}
+\newcommand{\exprefix}{\thechapter}
+\newcommand{\paradeigma}[1]{%
+  \refstepcounter{paradeigma}%
+  \par\vspace{1ex}\noindent\textbf{Παράδειγμα \thechapter.\theparadeigma\enspace #1}\par\nopagebreak}
+\newcommand{\tixero}{\textbf{Τι ξέρω.}\ }
+\newcommand{\tithelo}{\textbf{Τι θέλω.}\ }
+\newcommand{\possindeo}{\textbf{Πώς τα συνδέω.}\ }
+\newcommand{\apantisi}{\textbf{Απάντηση.}\ }
+\newcommand{\elegxos}{\textbf{Έλεγχος.}\ }
+
+% ---------- ασκήσεις ----------
+\newcommand{\zoni}[2]{\par\Needspace{6\baselineskip}\vspace{1.4ex}\noindent{\color{gblue}\bfseries\large #1}\hspace{1.2em}{\color{ggray}\small #2}\par\nopagebreak\vspace{0.4ex}}
+\newcommand{\ex}[1][]{%
+  \refstepcounter{exer}%
+  \par\vspace{0.5ex}\noindent\hangindent=2.9em\hangafter=1
+  \hbox to 2.9em{\color{gblue}\bfseries\exprefix.\theexer\hfill}\hspace{0pt}%
+  \ifx&#1&\else{\bfseries #1\ }\fi}
+\newcommand{\sub}[1]{\ #1}
+
+% ---------- λύσεις ----------
+\newcommand{\lyseis}[2]{\setcounter{chapter}{#1}\par\vspace{1.5ex}\noindent{\color{gblue}\bfseries\large Κεφάλαιο #1: #2}\par\nopagebreak\vspace{0.3ex}}
+\newcommand{\sol}[1]{\par\vspace{0.35ex}\noindent\textbf{\thechapter.#1}\enspace}
+\newcommand{\solr}[2]{\par\vspace{0.35ex}\noindent\textbf{Ε#1.#2}\enspace}
+
+% ---------- κεφαλίδες ----------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[LE]{\color{ggray}\small Η Γλώσσα των Μαθηματικών}
+\fancyhead[RO]{\color{ggray}\small\leftmark}
+\fancyfoot[LE,RO]{\small\thepage}
+\fancypagestyle{plain}{\fancyhf{}\renewcommand{\headrulewidth}{0pt}\fancyfoot[LE,RO]{\small\thepage}}
+
+% ---------- συντομογραφίες ----------
+\newcommand{\blue}[1]{{\color{gblue}\bfseries #1}}
+\newcommand{\eur}{\,€}
+\newcommand{\MKD}{\text{Μ.Κ.Δ.}}
+\newcommand{\EKP}{\text{Ε.Κ.Π.}}
+\newcommand{\dd}{\mathbin{:}}
+\newcommand{\mn}[1]{\textcolor{gblue}{\bfseries #1}}
+\newcommand{\kouti}{\fbox{\rule{0pt}{1.1ex}\hspace{1.1ex}}}
+\providecommand{\square}{\mathord{\mdlgwhtsquare}}
