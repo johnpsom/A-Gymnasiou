@@ -193,3 +193,12 @@
   \draw[thick] (0,0) rectangle (2.4,0.42);\end{tikzpicture}}
 
 \renewcommand{\frac}{\dfrac}
+
+% ---------- Άξονας ρητών: \akgr[cm ανά μονάδα]{από}{έως}{θέση/ετικέτα,...} ----------
+\newcommand{\akgr}[4][0.9]{\begin{tikzpicture}[x=#1 cm,baseline=0cm]
+  \draw[-{Stealth},thick] (#2-0.5,0)--(#3+0.7,0);
+  \foreach \j in {#2,...,#3}{\draw (\j,0.1)--(\j,-0.1) node[below,font=\scriptsize]{$\j$};}
+  \draw[thick] (0,0.17)--(0,-0.17);
+  \def\kmarks{#4}\ifx\kmarks\empty\else
+  \foreach \m/\l in {#4}{\fill[gblue] (\m,0) circle (2.3pt) node[above=2pt,font=\small,gblue]{$\l$};}\fi
+\end{tikzpicture}}

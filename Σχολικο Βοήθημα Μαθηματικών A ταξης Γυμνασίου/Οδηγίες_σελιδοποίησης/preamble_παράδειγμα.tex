@@ -1,0 +1,296 @@
+% ======================================================================
+%  Πρότυπο σειράς βοηθημάτων Μαθηματικών  (XeLaTeX)
+%  Μεταγλώττιση:  xelatex main.tex  (δύο φορές για τα περιεχόμενα)
+% ======================================================================
+
+% ---------- Ρυθμίσεις που αλλάζουν συχνά ----------
+\newcommand{\seriestitle}{Η Γλώσσα των Μαθηματικών}   % προσωρινός τίτλος σειράς (απόφαση 2 του business plan)
+\newcommand{\booktitle}{Μαθηματικά ΣΤ' Δημοτικού}
+\newcommand{\bookauthor}{Ιωάννης Ψωμιάδης}
+\newif\ifdraft \drafttrue   % \draftfalse για την τελική έκδοση: κρύβει τις σημειώσεις συγγραφέα
+
+% ---------- Σελίδα 17 x 24 cm ----------
+\usepackage[paperwidth=170mm,paperheight=240mm,inner=20mm,outer=16mm,top=20mm,bottom=22mm,headsep=6mm,footskip=10mm]{geometry}
+
+% ---------- Γλώσσα και γραμματοσειρές ----------
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{greek}
+\setotherlanguage{english}
+\defaultfontfeatures{Ligatures=TeX}
+% Commissioner (Κώστας Μπαρτσόκας, άδεια OFL). Τα αρχεία είναι στον φάκελο fonts/.
+\setmainfont{Commissioner}[Path=fonts/,Extension=.ttf,
+  UprightFont=*-Regular,ItalicFont=*-Italic,BoldFont=*-Bold,BoldItalicFont=*-BoldItalic]
+\setsansfont{Commissioner}[Path=fonts/,Extension=.ttf,
+  UprightFont=*-Regular,ItalicFont=*-Italic,BoldFont=*-SemiBold,BoldItalicFont=*-BoldItalic]
+
+% ---------- Μαθηματικά ----------
+\usepackage{amsmath}
+% Υποδιαστολή μέσα σε μαθηματικά: γράφουμε 3{,}5
+\usepackage{unicode-math}      % σύμβολα από τη Latin Modern Math, ψηφία και γράμματα από την Commissioner
+\setmathfont{Latin Modern Math}
+\setmathfont{Commissioner-Regular.ttf}[Path=fonts/,range={up/num,up/latin,up/Latin,up/greek,up/Greek}]
+\setmathfont{Commissioner-Italic.ttf}[Path=fonts/,range={it/latin,it/Latin,it/greek,it/Greek}]
+\setmathfont{Latin Modern Math}[range={}]
+% Κλάσματα μέσα στο κείμενο: σε μέγεθος που διαβάζει άνετα ένα παιδί (όχι τα μικροσκοπικά του \textstyle)
+\AtBeginDocument{\let\oldfrac\frac
+  \renewcommand{\frac}[2]{\mathchoice{\oldfrac{#1}{#2}}{\dfrac{#1}{#2}}{\oldfrac{#1}{#2}}{\oldfrac{#1}{#2}}}}
+\newcommand{\tdot}{\mathord{.}}% τελεία χιλιάδων μέσα σε μαθηματικά, αν χρειαστεί
+
+% ---------- Χρώματα: ένα spot χρώμα ----------
+\usepackage{xcolor}
+\definecolor{spot}{RGB}{22,84,150}       % το χρώμα της τάξης (ΣΤ': βαθύ μπλε· Ε': πορτοκαλί 184,78,24)
+\definecolor{spotlight}{RGB}{228,238,249}
+\definecolor{ink}{RGB}{40,40,40}
+\definecolor{soft}{RGB}{242,242,242}
+\definecolor{mid}{RGB}{110,110,110}
+
+% ---------- Πακέτα σελιδοποίησης ----------
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{tabularx,booktabs,array,multicol}
+\usepackage{needspace} % \Needspace{..} όπου ένας τίτλος πρέπει να μείνει με το πλαίσιο που ακολουθεί
+\usepackage{xltabular} % πίνακες που σπάνε σε δύο σελίδες (επαναλαμβάνεται η επικεφαλίδα)
+\setlength{\LTpre}{0.5em}\setlength{\LTpost}{0.3em}
+% Ο πίνακας δεν χωρίζεται από τον τίτλο ή την πρόταση που προηγείται
+\makeatletter\patchcmd{\LT@start}{\endgraf\penalty\z@\vskip\LTpre}{\endgraf\penalty\@M\vskip\LTpre}{}{\PackageWarning{preamble}{LT@start patch failed}}\makeatother
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,decorations.pathreplacing,calc}
+\usepackage[nobottomtitles*]{titlesec} % κανένας τίτλος μόνος του στο κάτω μέρος της σελίδας
+\renewcommand{\bottomtitlespace}{.14\textheight}
+\usepackage{titletoc}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\raggedbottom % οι σελίδες δεν «τεντώνονται» κάθετα για να γεμίσουν
+\setlength{\parindent}{0pt}
+\setlength{\extrarowheight}{2pt} % χώρος για κλάσματα μέσα σε πίνακες
+\tolerance=2000
+\emergencystretch=3em
+\hbadness=10000
+\setlength{\parskip}{0.55em}
+\linespread{1.08}
+\setlist{itemsep=0.25em,topsep=0.3em}
+% Ποτέ μία μοναχική γραμμή παραγράφου στην αρχή ή στο τέλος σελίδας
+\clubpenalty=10000 \widowpenalty=10000 \displaywidowpenalty=10000
+\predisplaypenalty=10000
+\makeatletter\@beginparpenalty=10000\makeatother % μια πρόταση που τελειώνει σε «:» μένει με τη λίστα/τον πίνακα που ακολουθεί
+
+% ---------- Ρύθμιση σελιδοποίησης ανά κεφάλαιο ----------
+% Το απόσταγμα μεταξύ παραγράφων ρυθμίζεται ανά κεφάλαιο (αρχείο selidopoiisi.tex),
+% ώστε η τελευταία σελίδα κάθε κεφαλαίου να μη μένει με μία-δυο γραμμές.
+\newlength{\basicparskip}\setlength{\basicparskip}{0.55em}
+\newcommand{\tunepage}[1]{% #1 = κλειδί (π.χ. k13, e3)
+  \ifcsname tune@#1\endcsname
+    \setlength{\parskip}{\csname tune@#1\endcsname}%
+  \else\setlength{\parskip}{\basicparskip}\fi}
+\newcommand{\settune}[2]{\expandafter\def\csname tune@#1\endcsname{#2}}
+\InputIfFileExists{selidopoiisi}{}{}
+
+% ---------- Ενότητες (parts) και κεφάλαια ----------
+\titleformat{\part}[display]{\centering\sffamily\color{spot}}{}{0pt}{\Huge\bfseries}
+\titleformat{\chapter}[display]
+  {\sffamily\bfseries\raggedright\hyphenpenalty=10000}
+  {\color{spot}\large Κεφάλαιο \thechapter}
+  {4pt}
+  {\LARGE\textcolor{ink}}
+\titlespacing*{\chapter}{0pt}{0pt}{10pt}
+% Το χρώμα μπαίνει μέσα στον τίτλο (όχι στη μορφή): αλλιώς αφήνει «σημείο αλλαγής σελίδας» αμέσως μετά τον τίτλο
+\titleformat{\section}{\sffamily\bfseries\large}{}{0pt}{\textcolor{spot}}
+\titlespacing*{\section}{0pt}{1.2em}{0.4em}
+\titleformat{\subsection}{\sffamily\bfseries}{}{0pt}{\textcolor{ink}}
+
+\newcommand{\unitpart}[3]{%
+  \clearpage\phantomsection\addcontentsline{toc}{part}{Ενότητα #1: #2}%
+  \begingroup\renewcommand{\addcontentsline}[3]{}\part*{Ενότητα #1\\[6pt]\LARGE #2\\[10pt]\Large\normalfont\itshape «#3»}\endgroup
+  \markboth{Ενότητα #1}{}}
+
+\newcommand{\bookchapter}[3]{% {τίτλος}{αριθμός σχολικού κεφαλαίου}{τίτλος σχολικού}
+  \setcounter{chapter}{\numexpr#2-1\relax}%
+  \chapter{#1}\tunepage{k#2}%
+  \setcounter{paradeigma}{0}\setcounter{askisi}{0}%
+  \renewcommand{\theaskisi}{\thechapter.\arabic{askisi}}%
+  {\sffamily\small\color{mid} Σχολικό βιβλίο: Κεφάλαιο #2, «#3»}\par\medskip}
+
+\newcommand{\reviewchapter}[1]{%
+  \chapter*{Επανάληψη ενότητας #1}\tunepage{e#1}%
+  \addcontentsline{toc}{chapter}{\textit{Επανάληψη ενότητας #1}}%
+  \markboth{Επανάληψη ενότητας #1}{Επανάληψη ενότητας #1}%
+  \setcounter{askisi}{0}%
+  \renewcommand{\theaskisi}{Ε#1.\arabic{askisi}}}
+
+% Οι λευκές σελίδες πριν από μια δεξιά σελίδα μένουν εντελώς λευκές (χωρίς κεφαλίδα)
+\makeatletter
+\renewcommand{\cleardoublepage}{\clearpage\if@twoside\ifodd\c@page\else
+  \hbox{}\thispagestyle{empty}\newpage\fi\fi}
+\makeatother
+
+% Περιεχόμενα
+\setcounter{tocdepth}{1}
+\makeatletter\renewcommand{\@pnumwidth}{2.2em}\makeatother
+\contentsmargin{2.6em}
+\titlecontents{part}[0pt]{\addvspace{11pt}\sffamily\bfseries\color{spot}}{}{}{\hfill\contentspage}[\addvspace{3pt}]
+\titlecontents{chapter}[2.4em]{\addvspace{1.5pt}\sffamily}{\contentslabel{2.4em}}{}%
+  {\titlerule*[0.7pc]{.}\contentspage}
+\titlecontents{section}[2.4em]{\sffamily\small}{}{}{\titlerule*[0.7pc]{.}\contentspage}
+
+% Κεφαλίδες
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{\sffamily\small\color{mid}\seriestitle}
+\fancyhead[RO]{\sffamily\small\color{mid}\nouppercase{\leftmark}}
+\fancyfoot[LE,RO]{\sffamily\small\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+
+% ---------- Τα μέρη κάθε κεφαλαίου ----------
+\newcommand{\meros}[1]{\section*{#1}}
+
+% 1. Η ανάγκη
+\newtcolorbox{anagki}{enhanced,breakable,colback=spotlight,colframe=spotlight,
+  borderline west={3pt}{0pt}{spot},arc=0pt,left=10pt,right=8pt,top=6pt,bottom=6pt,
+  fontupper=\itshape}
+
+% 2. Η λέξη
+\newtcolorbox{lexi}[1]{enhanced,breakable,colback=white,colframe=spot,arc=2pt,boxrule=0.6pt,
+  title={\sffamily\bfseries Η λέξη: #1},coltitle=white,colbacktitle=spot,left=8pt,right=8pt}
+
+% 3. Η μετάφραση: πίνακας «στα ελληνικά / στα μαθηματικά»
+\newenvironment{metafrasi}
+  {\par\smallskip\renewcommand{\arraystretch}{1.45}\setlength{\extrarowheight}{5pt}%
+   \setlength{\LTpre}{0pt}\setlength{\LTpost}{0pt}%
+   \xltabular{\linewidth}{>{\raggedright\arraybackslash}X >{\centering\arraybackslash}p{0.44\linewidth}}
+   \toprule
+   \sffamily\bfseries Στα ελληνικά & \sffamily\bfseries Στα μαθηματικά\\ \midrule\endhead}
+  {\bottomrule\endxltabular\par\smallskip}
+
+% 4. Θεωρία: ορισμός, κανόνας, προσοχή
+\newtcolorbox{orismos}[1][]{enhanced,breakable,colback=soft,colframe=ink,arc=2pt,boxrule=0.5pt,
+  title={\sffamily\bfseries Ορισμός#1},coltitle=white,colbacktitle=ink,left=8pt,right=8pt}
+\newtcolorbox{kanonas}[1][]{enhanced,breakable,colback=soft,colframe=ink,arc=2pt,boxrule=0.5pt,
+  title={\sffamily\bfseries Κανόνας#1},coltitle=white,colbacktitle=ink,left=8pt,right=8pt}
+\newtcolorbox{prosoxi}{enhanced,breakable,colback=white,colframe=spot,arc=2pt,boxrule=0.5pt,
+  borderline west={3pt}{0pt}{spot},title={\sffamily\bfseries Προσοχή: συνηθισμένο λάθος},
+  coltitle=spot,colbacktitle=white,left=8pt,right=8pt}
+
+% 5. Λυμένα παραδείγματα: «τι ξέρω, τι θέλω, πώς τα συνδέω»
+\newcounter{paradeigma}
+\renewcommand{\theparadeigma}{\thechapter.\arabic{paradeigma}}
+\newenvironment{paradeigma}[1][]
+  {\refstepcounter{paradeigma}\par\medskip
+   {\sffamily\bfseries\color{spot}Παράδειγμα \theparadeigma}\ifx&#1&\else{\sffamily\bfseries\ #1}\fi\par\nopagebreak}
+  {\par\medskip}
+\newcommand{\xero}[1]{\par\textbf{Τι ξέρω.} #1\par}
+\newcommand{\thelo}[1]{\par\textbf{Τι θέλω.} #1\par}
+\newcommand{\syndeo}[1]{\par\textbf{Πώς τα συνδέω.} #1\par}
+\newcommand{\apantisi}[1]{\par\textbf{Απάντηση.} #1\par}
+\newcommand{\elegxos}[1]{\par\textbf{Έλεγχος.} #1\par}
+
+% 6. Ασκήσεις σε τρεις ζώνες
+\newcommand{\zoni}[2]{\subsection*{\color{spot}#1\quad{\normalfont\small\color{mid}#2}}}
+\newcommand{\zoniA}{\zoni{Το κατάλαβα}{εφαρμογή του κανόνα}}
+\newcommand{\zoniB}{\zoni{Το χρησιμοποιώ}{προβλήματα από τη ζωή}}
+\newcommand{\zoniC}{\zoni{Το σκέφτομαι}{ερωτήσεις που ανοίγουν δρόμο}}
+\newcounter{askisi}
+\renewcommand{\theaskisi}{\thechapter.\arabic{askisi}}
+\newenvironment{askisi}
+  {\refstepcounter{askisi}%
+   \csname @beginparpenalty\endcsname=10000 % η εκφώνηση δεν χωρίζεται από τον πίνακα/σχήμα που ακολουθεί
+   \begin{itemize}[leftmargin=2.9em,labelwidth=2.7em,labelsep=0.2em,align=left,itemsep=0pt,topsep=0.4em,partopsep=0pt]
+   \item[\sffamily\bfseries\color{spot}\theaskisi]}
+  {\end{itemize}}
+\newcommand{\kouti}{\mathord{\setlength{\fboxsep}{1pt}\fbox{\rule{0pt}{1.5ex}\hspace{0.5em}}}} % κουτάκι για ψηφίο που λείπει
+\newcommand{\kena}[1][2.5cm]{\underline{\hspace{#1}}}   % κενό για συμπλήρωση
+\newcommand{\grammes}[1][2]{\par\foreach \i in {1,...,#1}{\vspace{1.4em}\noindent\textcolor{mid}{\rule{\linewidth}{0.3pt}}\par}}
+
+% 7. Το παρέμβλημα του συγγραφέα
+\newtcolorbox{paremvlima}{enhanced,breakable,colback=white,colframe=spot,arc=0pt,boxrule=0pt,
+  borderline north={1pt}{0pt}{spot},borderline south={1pt}{0pt}{spot},
+  left=4pt,right=4pt,fontupper=\small}
+
+% 7β. Το «Από το εργοστάσιο» κάθε κεφαλαίου βρίσκεται χωριστά, στο ergostasio/fNN.tex, για εύκολη διόρθωση:
+\newcommand{\ergostasio}[1]{\IfFileExists{ergostasio/f#1.tex}{%
+  \meros{Από το εργοστάσιο}\begin{paremvlima}\input{ergostasio/f#1}\end{paremvlima}}{}}
+
+% 8. Λύσεις (στο τέλος του βιβλίου)
+\newenvironment{lyseiskef}[2]{\section*{Κεφάλαιο #1: #2}}{}
+\newcommand{\lysi}[2]{\par\noindent{\sffamily\bfseries\color{spot}#1}\quad #2\par}
+
+% ---------- Βοηθητικά ----------
+\newcommand{\stub}[1]{\begin{tcolorbox}[colback=soft,colframe=soft,arc=2pt]\itshape\color{mid}#1\end{tcolorbox}}
+\newcommand{\draftnote}[1]{\ifdraft{\par\sffamily\footnotesize\color{red}[Σημείωση συγγραφέα: #1]\par}\fi}
+\newcommand{\euro}{€}
+\newcommand{\symb}[1]{\textsf{#1}}
+
+% ---------- Σχήματα κλασμάτων (Ενότητα 3) ----------
+% \lorida[πλάτος cm]{ίσα μέρη}{χρωματισμένα}: λωρίδα χωρισμένη σε ίσα μέρη
+\newcommand{\lorida}[3][5]{\begin{tikzpicture}[baseline=0.05cm]
+  \pgfmathsetmacro{\lw}{#1/#2}%
+  \foreach \i in {1,...,#2}{%
+    \ifnum\i>#3\relax\def\lc{white}\else\def\lc{spot!35}\fi
+    \draw[fill=\lc,draw=ink] ({(\i-1)*\lw},0) rectangle ({\i*\lw},0.42);}
+\end{tikzpicture}}
+% \pita[ακτίνα cm]{ίσα μέρη}{χρωματισμένα}: κύκλος (πίτα) χωρισμένος σε ίσα μέρη
+\newcommand{\pita}[3][0.55]{\begin{tikzpicture}[baseline=-0.1cm]
+  \foreach \i in {1,...,#2}{%
+    \ifnum\i>#3\relax\else
+      \fill[spot!35] (0,0) -- ({90-(\i-1)*360/#2}:#1) arc[start angle={90-(\i-1)*360/#2},end angle={90-\i*360/#2},radius=#1] -- cycle;\fi
+    \ifnum#2>1\relax\draw[ink] (0,0) -- ({90-(\i-1)*360/#2}:#1);\fi}
+  \draw[ink] (0,0) circle (#1);
+\end{tikzpicture}}
+% \kgrammi[cm ανά μονάδα]{μέγιστος ακέραιος}{παρονομαστής}{αριθμητής/ετικέτα,...}: αριθμογραμμή
+\newcommand{\kgrammi}[4][4]{\begin{tikzpicture}[baseline=0cm]
+  \draw[-{Latex},ink] (-0.2,0) -- ({#2*#1+0.4},0);
+  \pgfmathtruncatemacro{\kn}{#2*#3}%
+  \foreach \j in {0,...,\kn}{\draw[ink] ({\j*#1/#3},0.08) -- ({\j*#1/#3},-0.08);}
+  \foreach \j in {0,...,#2}{\draw[ink,thick] ({\j*#1},0.15) -- ({\j*#1},-0.15) node[below]{\small\j};}
+  \def\kmarks{#4}\ifx\kmarks\empty\else
+  \foreach \m/\l in {#4}{\fill[spot] ({\m*#1/#3},0) circle (2pt) node[above=2pt]{\small\l};}\fi
+\end{tikzpicture}}
+
+% ---------- Διαγράμματα δεδομένων (Ενότητα 4) ----------
+% \rabdogramma[cm ανά μονάδα]{ετικέτα/τιμή,...}{μέγιστο άξονα}{βήμα άξονα}
+\newcommand{\rabdogramma}[4][0.1]{\begin{tikzpicture}[x=1cm,y=#1 cm]
+  \foreach \y in {0,#4,...,#3}{\draw[mid,very thin] (0.3,\y) -- (0.25,\y) node[left,font=\scriptsize]{\y};}
+  \foreach \l/\v [count=\i] in {#2}{\xdef\rlast{\i}%
+    \fill[spot!55] (\i*1.45-0.38,0) rectangle (\i*1.45+0.38,\v);
+    \node[above,font=\scriptsize] at (\i*1.45,\v) {\v};
+    \node[below,font=\scriptsize,align=center,text width=1.4cm] at (\i*1.45,0) {\l};}
+  \draw[ink] (0.3,#3) -- (0.3,0) -- (\rlast*1.45+0.7,0);
+\end{tikzpicture}}
+% \diplorabdo[cm ανά μονάδα]{ετικέτα/τιμή1/τιμή2,...}{μέγιστο}{βήμα}{υπόμνημα 1}{υπόμνημα 2}
+\newcommand{\diplorabdo}[6][0.1]{\begin{tikzpicture}[x=1cm,y=#1 cm]
+  \foreach \y in {0,#4,...,#3}{\draw[mid,very thin] (0.3,\y) -- (0.25,\y) node[left,font=\scriptsize]{\y};}
+  \foreach \l/\v/\w [count=\i] in {#2}{\xdef\rlast{\i}%
+    \fill[spot!70] (\i*1.7-0.5,0) rectangle (\i*1.7,\v);
+    \fill[ink!35] (\i*1.7,0) rectangle (\i*1.7+0.5,\w);
+    \node[below,font=\scriptsize,align=center,text width=1.6cm] at (\i*1.7,0) {\l};}
+  \draw[ink] (0.3,#3) -- (0.3,0) -- (\rlast*1.7+0.8,0);
+  \fill[spot!70] (\rlast*1.7+1.1,#3) rectangle ++(0.3,-#4/2); \node[right,font=\scriptsize] at (\rlast*1.7+1.4,#3-#4/4) {#5};
+  \fill[ink!35] (\rlast*1.7+1.1,#3-#4) rectangle ++(0.3,-#4/2); \node[right,font=\scriptsize] at (\rlast*1.7+1.4,#3-#4*1.25) {#6};
+\end{tikzpicture}}
+% \eikona{πλήθος}: σειρά από εικονίδια (κυκλάκια) για εικονογράμματα
+\newcommand{\eikona}[1]{\tikz[baseline=-0.6ex]{\foreach \i in {1,...,#1}{\fill[spot!70] (\i*0.36,0) circle (0.13);}}}
+% \misoeikona: μισό εικονίδιο
+\newcommand{\misoeikona}{\,\tikz[baseline=-0.6ex]{\fill[spot!70] (0,-0.13) arc[start angle=-90,end angle=90,radius=0.13] -- cycle;}}
+
+% ---------- Δεκαδικοί (Ενότητα 5) ----------
+% \plegma[πλευρά cm]{χρωματισμένα από 100}: τετράγωνο 10x10, χρωματίζονται στήλη-στήλη
+\newcommand{\plegma}[2][2]{\begin{tikzpicture}[baseline=0.3cm,x=#1 cm/10,y=#1 cm/10]
+  \pgfmathtruncatemacro{\pf}{#2/10}\pgfmathtruncatemacro{\pr}{#2-10*\pf}%
+  \ifnum\pf>0 \fill[spot!45] (0,0) rectangle (\pf,10);\fi
+  \ifnum\pr>0 \fill[spot!45] (\pf,10-\pr) rectangle (\pf+1,10);\fi
+  \foreach \g in {1,...,9}{\draw[ink!40,very thin] (\g,0) -- (\g,10); \draw[ink!40,very thin] (0,\g) -- (10,\g);}
+  \draw[ink] (0,0) rectangle (10,10);
+\end{tikzpicture}}
+
+% ---------- Ακέραιοι (Ενότητα 6) ----------
+% \akgrammi[cm ανά μονάδα]{από}{έως}{θέση/ετικέτα,...}: αριθμογραμμή με αρνητικούς
+\newcommand{\akgrammi}[4][0.55]{\begin{tikzpicture}[baseline=0cm,x=#1 cm]
+  \draw[{Latex}-{Latex},ink] (#2-0.6,0) -- (#3+0.6,0);
+  \foreach \j in {#2,...,#3}{\draw[ink] (\j,0.1) -- (\j,-0.1) node[below,font=\scriptsize]{$\j$};}
+  \draw[ink,thick] (0,0.18) -- (0,-0.18);
+  \def\kmarks{#4}\ifx\kmarks\empty\else
+  \foreach \m/\l in {#4}{\fill[spot] (\m,0) circle (2.2pt) node[above=2pt,font=\small]{\l};}\fi
+\end{tikzpicture}}
