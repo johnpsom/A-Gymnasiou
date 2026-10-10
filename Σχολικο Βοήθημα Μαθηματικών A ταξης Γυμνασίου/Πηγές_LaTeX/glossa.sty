@@ -25,6 +25,8 @@
 \RequirePackage{icomma}      % δεκαδικό κόμμα χωρίς κενό στα μαθηματικά
 \RequirePackage{microtype}
 \RequirePackage{needspace}
+\RequirePackage{longtable}
+\setlength{\LTpre}{0.4em}\setlength{\LTpost}{0.2em}
 \RequirePackage[hidelinks]{hyperref}
 
 % ---------- γραμματοσειρές ----------
@@ -90,7 +92,7 @@
   {\raggedright\bfseries\fontsize{24}{30}\selectfont #1\par}\vspace{6mm}
   {\color{ggray}\itshape\large «#2»\par}\vspace{10mm}
   {\color{gblue}\bfseries Στο κεφάλαιο αυτό\par}\vspace{1ex}
-  \noindent\begin{minipage}{\linewidth}\small #3\end{minipage}\par
+  \noindent\begin{minipage}{\linewidth}\small\renewcommand{\arraystretch}{0.9}#3\end{minipage}\par
   \clearpage}
 
 % \paragrafos{τίτλος}{παραπομπή}: παράγραφος (υποενότητα) του κεφαλαίου
@@ -109,11 +111,11 @@
 \newcommand{\paragrafosz}[2]{\setcounter{section}{-1}\paragrafos{#1}{#2}}
 
 % \ypotmima{Α}{τίτλος}: υποδιαίρεση μιας μεγάλης παραγράφου (η αρίθμηση ασκήσεων συνεχίζεται)
-\newcommand{\ypotmima}[2]{\par\Needspace{10\baselineskip}\vspace{2.5ex}%
+\newcommand{\ypotmima}[2]{\par\Needspace{9\baselineskip}\vspace{2.5ex}%
   {\color{gblue}\bfseries\Large #1.\ #2}\par\vspace{0.3ex}{\color{gblue}\hrule height 0.8pt}\vspace{1.5ex}\par}
 
 % ---------- τίτλοι ενοτήτων μέσα στο κεφάλαιο ----------
-\newcommand{\tmima}[1]{\par\Needspace{10\baselineskip}\vspace{1.2ex}{\color{gblue}\bfseries\large #1}\par\nopagebreak\vspace{0.4ex}}
+\newcommand{\tmima}[1]{\par\Needspace{15\baselineskip}\vspace{1.2ex}{\color{gblue}\bfseries\large #1}\par\nopagebreak\vspace{0.4ex}}
 \newcommand{\tmimasmall}[1]{\par\Needspace{4\baselineskip}\vspace{0.8ex}{\bfseries #1}\par\nopagebreak}
 
 % ---------- κουτιά ----------
