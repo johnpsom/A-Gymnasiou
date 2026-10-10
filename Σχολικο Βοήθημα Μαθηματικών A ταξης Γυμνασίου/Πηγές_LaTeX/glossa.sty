@@ -14,7 +14,8 @@
 \RequirePackage{array}
 \RequirePackage{enumitem}
 \RequirePackage{fancyhdr}
-\RequirePackage{titlesec}
+\RequirePackage[nobottomtitles*]{titlesec}
+\renewcommand{\bottomtitlespace}{.14\textheight}
 \RequirePackage{tcolorbox}
 \tcbuselibrary{skins,breakable}
 \RequirePackage{tikz}
@@ -37,11 +38,25 @@
 \linespread{1.12}
 \raggedbottom
 \emergencystretch=3em
-\tolerance=1500
+\tolerance=2000
+\hbadness=10000
+% Ποτέ μία μοναχική γραμμή παραγράφου στην αρχή ή στο τέλος σελίδας
+\clubpenalty=10000 \widowpenalty=10000 \displaywidowpenalty=10000
+\predisplaypenalty=10000
+\makeatletter\@beginparpenalty=10000\makeatother % πρόταση που τελειώνει σε «:» μένει με τη λίστα/πίνακα που ακολουθεί
+% Οι λευκές σελίδες πριν από δεξιά σελίδα μένουν εντελώς λευκές (χωρίς κεφαλίδα)
+\makeatletter
+\renewcommand{\cleardoublepage}{\clearpage\if@twoside\ifodd\c@page\else\hbox{}\thispagestyle{empty}\newpage\fi\fi}
+\makeatother
+% Ρύθμιση απόστασης παραγράφων ανά κεφάλαιο (αρχείο selidopoiisi.tex)
+\newlength{\basicparskip}\setlength{\basicparskip}{0.55em}
+\newcommand{\tunepage}[1]{\ifcsname tune@#1\endcsname\setlength{\parskip}{\csname tune@#1\endcsname}\else\setlength{\parskip}{\basicparskip}\fi}
+\newcommand{\settune}[2]{\expandafter\def\csname tune@#1\endcsname{#2}}
+\InputIfFileExists{selidopoiisi}{}{}
 
 % ---------- χρώματα ----------
-\definecolor{gblue}{HTML}{1F5FAF}
-\definecolor{gblueL}{HTML}{E4EEF9}
+\definecolor{gblue}{HTML}{16695A}
+\definecolor{gblueL}{HTML}{E3F1EE}
 \definecolor{gdark}{HTML}{2B2B2B}
 \definecolor{ggray}{HTML}{6E6E6E}
 \definecolor{gwarm}{HTML}{FFF3E0}
@@ -68,7 +83,7 @@
 % \kefalaio{τίτλος}{μότο}{λίστα παραγράφων}: σελίδα κεφαλαίου
 \newcommand{\kefalaio}[3]{%
   \clearpage\thispagestyle{empty}\refstepcounter{chapter}\setcounter{section}{0}%
-  \addcontentsline{toc}{chapter}{Κεφάλαιο \partpfx\thechapter: #1}%
+  \addcontentsline{toc}{chapter}{Κεφάλαιο \partpfx\thechapter: #1}\tunepage{\partpfx k\thechapter}%
   \markboth{#1}{#1}%
   \vspace*{40mm}%
   {\color{gblue}\bfseries\Large Κεφάλαιο \partpfx\thechapter}\par\vspace{3mm}
