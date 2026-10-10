@@ -9,7 +9,7 @@
 \end{anagke}
 
 \begin{lexi}{στερεό, πρίσμα, κώνος, ανάπτυγμα}{ονόματα στερεών}
-\lexiword{Στερεό} λέμε ένα σώμα που καταλαμβάνει χώρο. Το \lexiword{πρίσμα} βγαίνει από το αρχαίο «πρίζω», που σημαίνει πριονίζω: κάτι «πριονισμένο». Το \lexiword{παραλληλεπίπεδο} έχει «παράλληλα επίπεδα» για απέναντι έδρες. Ο \lexiword{κώνος} είναι το κουκουνάρι στα αρχαία ελληνικά. Ο \lexiword{κύλινδρος} βγαίνει από το «κυλίω». Η \lexiword{γενέτειρα} είναι αυτή που «γεννά» τη επιφάνεια όταν περιστρέφεται. Το \lexiword{ανάπτυγμα} βγαίνει από το «αναπτύσσω», δηλαδή ξεδιπλώνω.
+\lexiword{Στερεό} λέμε ένα σώμα που καταλαμβάνει χώρο. Το \lexiword{πρίσμα} βγαίνει από το αρχαίο «πρίζω», που σημαίνει πριονίζω: κάτι «πριονισμένο». Το \lexiword{παραλληλεπίπεδο} έχει «παράλληλα επίπεδα» για απέναντι έδρες. Ο \lexiword{κώνος} είναι το κουκουνάρι στα αρχαία ελληνικά. Ο \lexiword{κύλινδρος} βγαίνει από το «κυλίω». Η \lexiword{γενέτειρα} είναι αυτή που «γεννά» την επιφάνεια όταν περιστρέφεται. Το \lexiword{ανάπτυγμα} βγαίνει από το «αναπτύσσω», δηλαδή ξεδιπλώνω.
 \end{lexi}
 
 \begin{metafrasi}
@@ -79,7 +79,7 @@ $\bullet$ όλες τις άλλες έδρες ορθογώνια παραλλ�
 \draw[fill=gblue!20,thick] (1.8,0)--(3.6,0)--(2.7,-1.56)--cycle;
 \node at (0.9,1.8) {έδρα};\node at (2.7,1.8) {έδρα};\node at (4.5,1.8) {έδρα};
 \node at (2.7,4.1) {βάση};\node at (2.7,-0.8) {βάση};
-\draw[<->] (0,-0.5)--(5.4,-0.5) node[midway,below,font=\small] {περίμετρος της βάσης};
+\draw[<->] (0,-2.0)--(5.4,-2.0) node[midway,below,font=\small] {περίμετρος της βάσης};
 \draw[<->] (-0.4,0)--(-0.4,3.6) node[midway,left,font=\small] {ύψος};
 \end{tikzpicture}
 \end{center}
@@ -145,9 +145,6 @@ $\bullet$ όλες τις άλλες έδρες ορθογώνια παραλλ�
 \draw[densely dotted] (0,0)--(0,2.6);
 \node[font=\small] (b) at (2.3,-0.9) {βάση};\draw[-{Stealth}] (b)--(1.0,-0.2);
 \node[font=\small,align=center] (p) at (2.4,2.0) {παράπλευρη\\έδρα};\draw[-{Stealth}] (p)--(0.6,0.9);
-\end{scope}
-\begin{scope}[shift={(7,0)}]
-\draw[fill=gblue!15,thick] (0,0)--(0.45,-0.6)--(1.6,-0.6)--cycle;
 \end{scope}
 \end{tikzpicture}
 \end{center}
@@ -238,8 +235,8 @@ $\nu$-γωνικό πρίσμα & $\nu+2$ & $2\nu$ & $3\nu$\\
 \begin{tikzpicture}[scale=0.8]
 \begin{scope}
 \binCone{1}{0.3}{2.4}
-\node[font=\small] at (0.15,1.25) {ύψος};
-\node[font=\small,right] at (0.6,0.9) {γενέτειρα};
+\node[font=\small,anchor=east] at (-0.1,1.2) {ύψος};
+\node[font=\small,anchor=west] at (0.55,1.5) {γενέτειρα};
 \draw[dashed,gray] (0,0)--(0,2.4);
 \node[font=\small] at (0,-0.65) {κώνος};
 \end{scope}
@@ -368,20 +365,20 @@ $\nu$-γωνικό πρίσμα & $\nu+2$ & $2\nu$ & $3\nu$\\
 
 \ex \textbf{Αναπτύγματα κύβου.} Ποια από τις παρακάτω διατάξεις έξι τετραγώνων διπλώνονται σε κύβο;
 \begin{center}
-\begin{tikzpicture}[scale=0.38]
-\node[font=\small] at (1.5,-1.6) {α};
+\begin{tikzpicture}[scale=0.42]
+\node[font=\small] at (1.5,-1.4) {α};
 \begin{scope}\binNet{1/0,1/1,1/2,1/3,0/1,2/1}\end{scope}
-\begin{scope}[shift={(7,0)}]\node[font=\small] at (2,-1.6) {β};\binNet{0/0,1/0,2/0,3/0,0/1,3/1}\end{scope}
-\begin{scope}[shift={(14,0)}]\node[font=\small] at (2,-1.6) {γ};\binNet{0/0,1/0,2/0,3/0,1/1,2/-1}\end{scope}
-\begin{scope}[shift={(21,0)}]\node[font=\small] at (2,-1.6) {δ};\binNet{0/0,1/0,2/0,3/0,4/0,2/1}\end{scope}
-\begin{scope}[shift={(28,0)}]\node[font=\small] at (1.5,-1.6) {ε};\binNet{0/0,1/0,1/1,2/1,2/2,3/2}\end{scope}
-\begin{scope}[shift={(35,0)}]\node[font=\small] at (1.5,-1.6) {στ};\binNet{0/0,1/0,2/0,0/1,1/1,2/1}\end{scope}
+\begin{scope}[shift={(7,0)}]\node[font=\small] at (2,-1.4) {β};\binNet{0/0,1/0,2/0,3/0,0/1,3/1}\end{scope}
+\begin{scope}[shift={(14,0)}]\node[font=\small] at (2,-1.4) {γ};\binNet{0/0,1/0,2/0,3/0,1/1,2/-1}\end{scope}
+\begin{scope}[shift={(0,-8)}]\node[font=\small] at (2.5,-1.4) {δ};\binNet{0/0,1/0,2/0,3/0,4/0,2/1}\end{scope}
+\begin{scope}[shift={(7,-8)}]\node[font=\small] at (1.5,-1.4) {ε};\binNet{0/0,1/0,1/1,2/1,2/2,3/2}\end{scope}
+\begin{scope}[shift={(14,-8)}]\node[font=\small] at (1.5,-1.4) {στ};\binNet{0/0,1/0,2/0,0/1,1/1,2/1}\end{scope}
 \end{tikzpicture}
 \end{center}
 
 \ex \textbf{Ανάπτυγμα και στερεό.} Αντιστοίχισε κάθε ανάπτυγμα με το στερεό που σχηματίζει: τριγωνικό πρίσμα, τετραγωνική πυραμίδα, κύλινδρος, κώνος.
 \begin{center}
-\begin{tikzpicture}[scale=0.42]
+\begin{tikzpicture}[scale=0.34]
 \node[font=\small] at (2.5,-2.4) {Α};
 \draw[fill=gblue!8,thick] (0,0) rectangle (5,2.4);\draw[fill=gblue!18,thick] (1.2,2.4+0.8) circle (0.8);\draw[fill=gblue!18,thick] (3.8,-0.8) circle (0.8);
 \begin{scope}[shift={(8,0)}]\node[font=\small] at (2.4,-2.4) {Β};
@@ -391,7 +388,7 @@ $\nu$-γωνικό πρίσμα & $\nu+2$ & $2\nu$ & $3\nu$\\
 \draw[fill=gblue!18,thick] (0,0)--(2.4,0)--(1.2,-2.4)--cycle;
 \draw[fill=gblue!18,thick] (0,0)--(0,2.4)--(-2.4,1.2)--cycle;\end{scope}
 \begin{scope}[shift={(19,5)}]\node[font=\small] at (0,-6.7) {Γ};
-\draw[thick,fill=gblue!8] (0,0)--(205:3) arc[start angle=205,end angle=335,radius=3]--cycle;
+\draw[thick,fill=gblue!8] (0,0)--(192:3) arc[start angle=192,end angle=348,radius=3]--cycle;
 \draw[thick,fill=gblue!18] (0,-4.4) circle (1.4);\end{scope}
 \begin{scope}[shift={(26,0)}]\node[font=\small] at (3,-2.4) {Δ};
 \foreach \x in {0,2,4}{\draw[fill=gblue!8,thick] (\x,0) rectangle (\x+2,4);}
