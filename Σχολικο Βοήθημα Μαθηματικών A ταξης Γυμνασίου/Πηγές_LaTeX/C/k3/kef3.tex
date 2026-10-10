@@ -1,0 +1,31 @@
+% Βοηθητικές εντολές του κεφαλαίου Γ3
+\providecommand{\bindie}[1]{\begin{tikzpicture}[baseline=-0.6ex,scale=0.5]
+  \draw[rounded corners=2pt,thick,fill=white] (-0.5,-0.5) rectangle (0.5,0.5);
+  \ifcase#1 \or \fill (0,0) circle (0.09);
+  \or \fill (-0.24,0.24) circle (0.09) (0.24,-0.24) circle (0.09);
+  \or \fill (-0.24,0.24) circle (0.09) (0,0) circle (0.09) (0.24,-0.24) circle (0.09);
+  \or \fill (-0.24,0.24) circle (0.09) (0.24,0.24) circle (0.09) (-0.24,-0.24) circle (0.09) (0.24,-0.24) circle (0.09);
+  \or \fill (-0.24,0.24) circle (0.09) (0.24,0.24) circle (0.09) (0,0) circle (0.09) (-0.24,-0.24) circle (0.09) (0.24,-0.24) circle (0.09);
+  \or \fill (-0.24,0.24) circle (0.09) (0.24,0.24) circle (0.09) (-0.24,0) circle (0.09) (0.24,0) circle (0.09) (-0.24,-0.24) circle (0.09) (0.24,-0.24) circle (0.09);
+  \fi
+\end{tikzpicture}}
+\providecommand{\binwheel}[2]{\begin{tikzpicture}[baseline=0cm]
+  \foreach \c [count=\i from 0] in {#2}{%
+    \fill[\c] (0,0)--({\i*360/#1}:1.35)arc({\i*360/#1}:{(\i+1)*360/#1}:1.35)--cycle;}
+  \foreach \i in {0,...,\numexpr#1-1\relax}{\draw[thick] (0,0)--({\i*360/#1}:1.35);}
+  \draw[thick] (0,0) circle (1.35);
+  \fill[white,draw=black,thick] (0,0) circle (0.12);
+  \fill[gwarmD] (0,1.7)--(-0.13,1.45)--(0.13,1.45)--cycle;
+\end{tikzpicture}}
+\tikzset{tn/.style={circle,draw=gblue,fill=gblueL,inner sep=1pt,minimum size=5.2mm,font=\small}}
+\kefalaio{Πειράματα τύχης και πιθανότητες}{Δεν ξέρουμε τι θα φέρει το ζάρι, ξέρουμε όμως πόσο πιθανό είναι}{%
+\begin{tabular}{@{}l@{\hspace{1em}}p{0.82\linewidth}@{}}
+3.1 & Πειράματα τύχης, δειγματικός χώρος\\[2pt]
+3.2 & Δενδροδιάγραμμα και πίνακας διπλής εισόδου\\[2pt]
+3.3 & Κλασικός ορισμός της πιθανότητας\\[2pt]
+ & Επανάληψη του κεφαλαίου\\
+\end{tabular}}
+\input{C/k3/p1}
+\input{C/k3/p2}
+\input{C/k3/p3}
+\input{C/k3/epan}

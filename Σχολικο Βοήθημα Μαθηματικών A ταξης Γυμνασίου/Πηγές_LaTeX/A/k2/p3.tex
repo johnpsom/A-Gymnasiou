@@ -34,8 +34,11 @@ $4$ βήματα αριστερά και $2$ αριστερά ακόμα. & $(-4
   \draw[-{Stealth},thick] (-7.5,0)--(8.5,0);
   \foreach \j in {-7,...,8}{\draw (\j,0.1)--(\j,-0.1) node[below,font=\scriptsize]{$\j$};}
   \draw[thick] (0,0.17)--(0,-0.17);
-  \draw[-{Stealth},gblue,thick] (0,0.45) to[bend left=25] node[above,font=\small]{$+4$} (4,0.45);
-  \draw[-{Stealth},gwarmD,thick] (4,0.45) to[bend right=25] node[above,font=\small]{$-3$} (1,0.45);
+  \draw[-{Stealth},gblue,thick] (0,0.6)--(4,0.6) node[midway,above,font=\small]{$+4$};
+  \draw[-{Stealth},gwarmD,thick] (4,1.4)--(1,1.4) node[midway,above,font=\small]{$-3$};
+  \draw[dotted] (0,0)--(0,0.6);
+  \draw[dotted] (4,0.6)--(4,1.4);
+  \draw[dotted] (1,1.4)--(1,0);
   \fill[gblue] (1,0) circle (2.3pt);
 \end{tikzpicture}
 \end{center}
