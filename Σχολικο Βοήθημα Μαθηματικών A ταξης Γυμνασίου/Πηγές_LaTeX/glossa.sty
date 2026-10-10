@@ -85,12 +85,12 @@
   \clearpage\thispagestyle{empty}\refstepcounter{chapter}\setcounter{section}{0}%
   \addcontentsline{toc}{chapter}{Κεφάλαιο \partpfx\thechapter: #1}\tunepage{\partpfx k\thechapter}%
   \markboth{#1}{#1}%
-  \vspace*{40mm}%
+  \vspace*{16mm}%
   {\color{gblue}\bfseries\Large Κεφάλαιο \partpfx\thechapter}\par\vspace{3mm}
   {\raggedright\bfseries\fontsize{24}{30}\selectfont #1\par}\vspace{6mm}
-  {\color{ggray}\itshape\large «#2»\par}\vspace{14mm}
+  {\color{ggray}\itshape\large «#2»\par}\vspace{10mm}
   {\color{gblue}\bfseries Στο κεφάλαιο αυτό\par}\vspace{1ex}
-  {\small #3\par}
+  \noindent\begin{minipage}{\linewidth}\small #3\end{minipage}\par
   \clearpage}
 
 % \paragrafos{τίτλος}{παραπομπή}: παράγραφος (υποενότητα) του κεφαλαίου
@@ -110,7 +110,7 @@
   {\color{gblue}\bfseries\Large #1.\ #2}\par\vspace{0.3ex}{\color{gblue}\hrule height 0.8pt}\vspace{1.5ex}\par}
 
 % ---------- τίτλοι ενοτήτων μέσα στο κεφάλαιο ----------
-\newcommand{\tmima}[1]{\par\Needspace{6\baselineskip}\vspace{1.2ex}{\color{gblue}\bfseries\large #1}\par\nopagebreak\vspace{0.4ex}}
+\newcommand{\tmima}[1]{\par\Needspace{10\baselineskip}\vspace{1.2ex}{\color{gblue}\bfseries\large #1}\par\nopagebreak\vspace{0.4ex}}
 \newcommand{\tmimasmall}[1]{\par\Needspace{4\baselineskip}\vspace{0.8ex}{\bfseries #1}\par\nopagebreak}
 
 % ---------- κουτιά ----------
@@ -139,14 +139,17 @@
 \newcommand{\lexiword}[1]{\textbf{#1}}
 
 % ---------- πίνακας «Η μετάφραση» ----------
+\newsavebox{\metabox}
 \newenvironment{metafrasi}{%
-  \tmima{Η μετάφραση}\par\vspace{-0.3em}
+  \par\begin{lrbox}{\metabox}\begin{minipage}{\linewidth}
   \renewcommand{\arraystretch}{1.55}
   \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}} >{\raggedright\arraybackslash}p{0.5\linewidth} >{\centering\arraybackslash}p{0.38\linewidth}}
   \toprule
   \textbf{Στα ελληνικά} & \textbf{Στα μαθηματικά}\\
   \midrule
-}{\bottomrule\end{tabular*}\par\vspace{0.3em}}
+}{\bottomrule\end{tabular*}\end{minipage}\end{lrbox}%
+  \Needspace*{\dimexpr\ht\metabox+\dp\metabox+4\baselineskip\relax}%
+  \tmima{Η μετάφραση}\par\vspace{-0.3em}\usebox{\metabox}\par\vspace{0.3em}}
 
 % ---------- λυμένα παραδείγματα ----------
 \newcounter{paradeigma}
@@ -162,7 +165,7 @@
 \newcommand{\elegxos}{\textbf{Έλεγχος.}\ }
 
 % ---------- ασκήσεις ----------
-\newcommand{\zoni}[2]{\par\Needspace{6\baselineskip}\vspace{1.4ex}\noindent{\color{gblue}\bfseries\large #1}\hspace{1.2em}{\color{ggray}\small #2}\par\nopagebreak\vspace{0.4ex}}
+\newcommand{\zoni}[2]{\par\Needspace{7\baselineskip}\vspace{1.4ex}\noindent{\color{gblue}\bfseries\large #1}\hspace{1.2em}{\color{ggray}\small #2}\par\nopagebreak\vspace{0.4ex}}
 \newcommand{\ex}[1][]{%
   \refstepcounter{exer}%
   \par\vspace{0.5ex}\noindent\hangindent=3.6em\hangafter=1
@@ -172,8 +175,8 @@
 
 % ---------- λύσεις ----------
 \newcommand{\solprefix}{}
-\newcommand{\lyseismeros}[2]{\par\Needspace{8\baselineskip}\vspace{3ex}{\color{gblue}\bfseries\Large Μέρος #1΄: #2}\par\vspace{1ex}}
-\newcommand{\lyseiskef}[2]{\par\Needspace{6\baselineskip}\vspace{2.5ex}{\color{gblue}\bfseries\large Κεφάλαιο #1: #2}\par\vspace{0.5ex}}
+\newcommand{\lyseismeros}[2]{\par\Needspace{14\baselineskip}\vspace{3ex}{\color{gblue}\bfseries\Large Μέρος #1΄: #2}\par\vspace{1ex}}
+\newcommand{\lyseiskef}[2]{\par\Needspace{12\baselineskip}\vspace{2.5ex}{\color{gblue}\bfseries\large Κεφάλαιο #1: #2}\par\vspace{0.5ex}}
 \newcommand{\lyseis}[2]{\renewcommand{\solprefix}{#1}\par\Needspace{4\baselineskip}\vspace{1.5ex}\noindent{\bfseries Παράγραφος #1\enspace #2}\par\nopagebreak\vspace{0.3ex}}
 \newcommand{\lyseisE}[1]{\par\Needspace{4\baselineskip}\vspace{1.5ex}\noindent{\bfseries #1}\par\nopagebreak\vspace{0.3ex}}
 \newcommand{\sol}[1]{\par\vspace{0.35ex}\noindent\textbf{\solprefix.#1}\enspace}
