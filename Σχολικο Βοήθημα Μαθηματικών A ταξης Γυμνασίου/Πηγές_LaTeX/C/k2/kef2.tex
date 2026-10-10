@@ -1,0 +1,19 @@
+% Βοηθητικές εντολές του κεφαλαίου Γ2
+% \binhist{ύψη}{άκρα κλάσεων}{μέγιστο ύψος}{τίτλος άξονα x}: ιστόγραμμα με κλάσεις ίσου πλάτους
+\providecommand{\binhist}[4]{\begin{tikzpicture}[x=0.95cm,y=0.42cm]
+  \foreach \y in {0,...,#3}{\draw[gray!40] (0,\y)--(5,\y);}
+  \foreach \h [count=\i from 0] in {#1}{\draw[fill=gblue!35,draw=gblue,thick] (\i,0) rectangle ({\i+1},\h);}
+  \foreach \l [count=\i from 0] in {#2}{\node[below,font=\scriptsize] at (\i,0) {\l};}
+  \foreach \y in {0,...,#3}{\node[left,font=\scriptsize] at (0,\y) {\y};}
+  \node[below,font=\small] at (2.85,-0.75) {#4};
+  \node[rotate=90,font=\small] at (-0.9,{#3/2}) {συχνότητα};
+\end{tikzpicture}}
+\kefalaio{Μέτρα θέσης – Μεταβλητότητα}{Δύο παρέες μπορούν να έχουν τον ίδιο μέσο όρο και εντελώς διαφορετική ιστορία}{%
+\begin{tabular}{@{}l@{\hspace{1em}}p{0.82\linewidth}@{}}
+2.1 & Μέση τιμή, διάμεσος\\[2pt]
+2.2 & Εύρος, κορυφές, απόμακρες τιμές, μεταβλητότητα των δεδομένων\\[2pt]
+ & Επανάληψη του κεφαλαίου\\
+\end{tabular}}
+\input{C/k2/p1}
+\input{C/k2/p2}
+\input{C/k2/epan}

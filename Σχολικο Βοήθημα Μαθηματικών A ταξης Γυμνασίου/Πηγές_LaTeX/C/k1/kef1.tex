@@ -1,0 +1,75 @@
+% ---------- δικές μας μακροεντολές για τα διαγράμματα του Γ1 ----------
+\definecolor{gaC1}{HTML}{16695A}
+\definecolor{gaC2}{HTML}{E8A33D}
+\definecolor{gaC3}{HTML}{D1624B}
+\definecolor{gaC4}{HTML}{5B8DB8}
+\definecolor{gaC5}{HTML}{9A7BB5}
+\definecolor{gaC6}{HTML}{8FB86B}
+\definecolor{gaC7}{HTML}{C9C9C9}
+
+% ραβδόγραμμα: \gaRabdos{μέγιστο y}{βήμα y}{ετικέτα/τιμή,...}{τίτλος άξονα y}
+\newcommand{\gaRabdos}[4]{%
+  \pgfmathsetmacro{\gaYs}{3.3/#1}%
+  \begin{tikzpicture}[x=1.45cm,y=\gaYs cm,baseline=0cm]
+    \foreach \gat in {0,#2,...,#1}{%
+      \draw[gray!35,line width=0.3pt] (0.2,\gat)--(7.4,\gat);
+      \node[left,font=\scriptsize] at (0.2,\gat) {\gat};}
+    \draw[thick] (0.2,0)--(0.2,#1);
+    \node[font=\scriptsize,rotate=90,above=0.5cm] at (0.2,{#1/2}) {#4};
+    \def\gaMaxI{0}%
+    \foreach \gal/\gav [count=\gai] in {#3}{%
+      \xdef\gaMaxI{\gai}%
+      \fill[gaC1!80] ({\gai+0.3-0.38},0) rectangle ({\gai+0.3+0.38},\gav);
+      \node[above,font=\scriptsize] at ({\gai+0.3},\gav) {\gav};
+      \node[below,font=\scriptsize,align=center,text width=1.3cm] at ({\gai+0.3},-0.04*#1) {\gal};}
+    \draw[thick] (0.2,0)--({\gaMaxI+0.95},0);
+  \end{tikzpicture}}
+
+% ιστόγραμμα: \gaIstogramma{πρώτο άκρο}{πλάτος κλάσης}{μέγιστο y}{βήμα y}{συχνότητες,...}{άξονας x}{άξονας y}
+\newcommand{\gaIstogramma}[7]{%
+  \def\gaN{0}\foreach \gaf [count=\gaci] in {#5}{\xdef\gaN{\gaci}}%
+  \pgfmathsetmacro{\gaXs}{min(1.5,9/\gaN)}%
+  \pgfmathsetmacro{\gaYs}{3.3/#3}%
+  \begin{tikzpicture}[x=\gaXs cm,y=\gaYs cm,baseline=0cm]
+    \foreach \gat in {0,#4,...,#3}{%
+      \draw[gray!35,line width=0.3pt] (0,\gat)--(\gaN+0.2,\gat);
+      \node[left,font=\scriptsize] at (0,\gat) {\gat};}
+    \foreach \gaf [count=\gai] in {#5}{%
+      \fill[gaC2!75] ({\gai-1},0) rectangle (\gai,\gaf);
+      \draw[gdark,line width=0.6pt] ({\gai-1},0) rectangle (\gai,\gaf);}
+    \draw[thick] (0,0)--(0,#3);
+    \draw[thick] (0,0)--(\gaN+0.2,0);
+    \foreach \gak in {0,...,\gaN}{%
+      \pgfmathparse{#1+\gak*#2}%
+      \draw (\gak,0)--(\gak,-0.03*#3);
+      \node[below,font=\scriptsize] at (\gak,-0.03*#3) {\pgfmathprintnumber[assume math mode=false,fixed,precision=2,use comma]{\pgfmathresult}};}
+    \node[font=\scriptsize,below=0.45cm] at ({\gaN/2},0) {#6};
+    \node[font=\scriptsize,rotate=90,above=0.55cm] at (0,{#3/2}) {#7};
+  \end{tikzpicture}}
+
+% κυκλικό διάγραμμα: \gaKykliko{ακτίνα cm}{ετικέτα/τιμή/δεύτερη γραμμή,...}
+\newcommand{\gaKykliko}[2]{%
+  \def\gaTot{0}\foreach \gal/\gav/\gae in {#2}{\pgfmathparse{\gaTot+\gav}\xdef\gaTot{\pgfmathresult}}%
+  \begin{tikzpicture}[baseline=0cm]
+    \xdef\gaA{90}%
+    \foreach \gal/\gav/\gae [count=\gai] in {#2}{%
+      \pgfmathsetmacro{\gaB}{\gaA-360*\gav/\gaTot}%
+      \pgfmathsetmacro{\gaM}{(\gaA+\gaB)/2}%
+      \fill[gaC\gai] (0,0)--(\gaA:#1)--(\gaA:#1) arc (\gaA:\gaB:#1)--cycle;
+      \draw[white,line width=0.9pt] (0,0)--(\gaA:#1);
+      \node[font=\scriptsize,align=center] at (\gaM:{#1+0.85}) {\gal\\ \gae};
+      \xdef\gaA{\gaB}}%
+    \draw[white,line width=0.9pt] (0,0)--(90:#1);
+  \end{tikzpicture}}
+
+\kefalaio{Διαχείριση δεδομένων}{Αριθμοί που μιλούν}{%
+\begin{tabular}{@{}l@{\hspace{1em}}p{0.82\linewidth}@{}}
+1.1 & Απογραφή, πληθυσμός, κατηγορικά και ποσοτικά δεδομένα\\[2pt]
+1.2 & Συλλογή συνεχών ποσοτικών δεδομένων\\[2pt]
+1.3 & Κυκλικά διαγράμματα και ιστογράμματα συχνοτήτων\\[2pt]
+ & Επανάληψη του κεφαλαίου\\
+\end{tabular}}
+\input{C/k1/p1}
+\input{C/k1/p2}
+\input{C/k1/p3}
+\input{C/k1/epan}

@@ -1,0 +1,23 @@
+\providecommand{\binsx}{\fcolorbox{gblue}{gblueL}{\strut\small$x$}}
+\providecommand{\binsw}[1]{\fcolorbox{black!60}{black!12}{\strut\scriptsize #1}}
+\providecommand{\binzyg}[2]{\begin{tikzpicture}[baseline=0pt,scale=0.85]
+\draw[thick,gblue] (-2.6,1.7)--(2.6,1.7);
+\draw[thick,gblue] (0,0.2)--(0,1.7);
+\draw[thick,gblue] (-0.7,0.2)--(0.7,0.2);
+\fill[gblue] (0,1.7) circle (2pt);
+\foreach \s in {-1,1}{
+ \draw[thin] (\s*2.6,1.7)--(\s*2.6-0.95,0.8);
+ \draw[thin] (\s*2.6,1.7)--(\s*2.6+0.95,0.8);
+ \draw[thick] (\s*2.6-0.95,0.8)--(\s*2.6+0.95,0.8);}
+\node[anchor=south,inner sep=1pt] at (-2.6,0.84) {#1};
+\node[anchor=south,inner sep=1pt] at (2.6,0.84) {#2};
+\end{tikzpicture}}
+\kefalaio{Αλγεβρικές σχέσεις}{Μια ζυγαριά που ισορροπεί δεν χάνει την ισορροπία της, αν κάνουμε το ίδιο και στους δύο δίσκους}{%
+\begin{tabular}{@{}l@{\hspace{1em}}p{0.82\linewidth}@{}}
+6.1 & Ιδιότητες της ισότητας και η έννοια της εξίσωσης\\[2pt]
+6.2 & Επίλυση εξίσωσης της μορφής $\alpha x+\beta=\gamma$\\[2pt]
+ & Επανάληψη του κεφαλαίου\\
+\end{tabular}}
+\input{A/k6/p1}
+\input{A/k6/p2}
+\input{A/k6/epan}
