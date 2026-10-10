@@ -1,0 +1,79 @@
+% ---- βοηθητικές εντολές TikZ για τα στερεά (μέσα σε tikzpicture) ----
+% ορθογώνιο παραλληλεπίπεδο: μπροστινή όψη w x h, βάθος (dx,dy)
+\providecommand{\binCuboid}[4]{%
+ \draw[dashed,gray] (#3,#4)--(0,0) (#3,#4)--(#3+#1,#4) (#3,#4)--(#3,#4+#2);
+ \filldraw[fill=gblue!8,thick] (0,0) rectangle (#1,#2);
+ \filldraw[fill=gblue!20,thick] (0,#2)--(#1,#2)--(#1+#3,#2+#4)--(#3,#2+#4)--cycle;
+ \filldraw[fill=gblue!30,thick] (#1,0)--(#1+#3,#4)--(#1+#3,#2+#4)--(#1,#2)--cycle;}
+% ορθό πρίσμα: n κορυφές βάσης, ακτίνα r, συμπίεση s, ύψος h, αρχική γωνία a
+\providecommand{\binPrism}[5]{%
+ \foreach \i in {0,...,\numexpr#1-1\relax}{%
+  \pgfmathsetmacro{\aa}{#5+360*\i/#1}%
+  \pgfmathsetmacro{\ab}{#5+360*(\i+1)/#1}%
+  \pgfmathsetmacro{\aem}{#5+360*(\i-0.5)/#1}%
+  \pgfmathsetmacro{\aep}{#5+360*(\i+0.5)/#1}%
+  \pgfmathsetmacro{\visE}{ifthenelse(sin(\aep)<0.01,1,0)}%
+  \pgfmathsetmacro{\visV}{ifthenelse(or(sin(\aep)<0.01,sin(\aem)<0.01),1,0)}%
+  \ifnum\visE=0 \draw[dashed,gray] ({#2*cos(\aa)},{#2*#3*sin(\aa)})--({#2*cos(\ab)},{#2*#3*sin(\ab)});\fi
+  \ifnum\visV=0 \draw[dashed,gray] ({#2*cos(\aa)},{#2*#3*sin(\aa)})--({#2*cos(\aa)},{#2*#3*sin(\aa)+#4});\fi}%
+ \foreach \i in {0,...,\numexpr#1-1\relax}{%
+  \pgfmathsetmacro{\aa}{#5+360*\i/#1}%
+  \pgfmathsetmacro{\ab}{#5+360*(\i+1)/#1}%
+  \pgfmathsetmacro{\aem}{#5+360*(\i-0.5)/#1}%
+  \pgfmathsetmacro{\aep}{#5+360*(\i+0.5)/#1}%
+  \pgfmathsetmacro{\visE}{ifthenelse(sin(\aep)<0.01,1,0)}%
+  \pgfmathsetmacro{\visV}{ifthenelse(or(sin(\aep)<0.01,sin(\aem)<0.01),1,0)}%
+  \ifnum\visE=1 \draw[thick] ({#2*cos(\aa)},{#2*#3*sin(\aa)})--({#2*cos(\ab)},{#2*#3*sin(\ab)});\fi
+  \ifnum\visV=1 \draw[thick] ({#2*cos(\aa)},{#2*#3*sin(\aa)})--({#2*cos(\aa)},{#2*#3*sin(\aa)+#4});\fi}%
+ \gdef\binlist{}%
+ \foreach \i in {0,...,\numexpr#1-1\relax}{%
+  \pgfmathsetmacro{\px}{#2*cos(#5+360*\i/#1)}%
+  \pgfmathsetmacro{\py}{#2*#3*sin(#5+360*\i/#1)+#4}%
+  \xdef\binlist{\binlist(\px,\py)}}%
+ \filldraw[fill=gblue!18,thick] plot coordinates{\binlist} -- cycle;}
+% πυραμίδα με βάση κανονικό n-γωνο και κορυφή πάνω από το κέντρο
+\providecommand{\binPyr}[5]{%
+ \foreach \i in {0,...,\numexpr#1-1\relax}{%
+  \pgfmathsetmacro{\aa}{#5+360*\i/#1}%
+  \pgfmathsetmacro{\ab}{#5+360*(\i+1)/#1}%
+  \pgfmathsetmacro{\aem}{#5+360*(\i-0.5)/#1}%
+  \pgfmathsetmacro{\aep}{#5+360*(\i+0.5)/#1}%
+  \pgfmathsetmacro{\visE}{ifthenelse(sin(\aep)<0.01,1,0)}%
+  \pgfmathsetmacro{\visV}{ifthenelse(or(sin(\aep)<0.01,sin(\aem)<0.01),1,0)}%
+  \ifnum\visE=0 \draw[dashed,gray] ({#2*cos(\aa)},{#2*#3*sin(\aa)})--({#2*cos(\ab)},{#2*#3*sin(\ab)});\fi
+  \ifnum\visV=0 \draw[dashed,gray] ({#2*cos(\aa)},{#2*#3*sin(\aa)})--(0,#4);\fi}%
+ \foreach \i in {0,...,\numexpr#1-1\relax}{%
+  \pgfmathsetmacro{\aa}{#5+360*\i/#1}%
+  \pgfmathsetmacro{\ab}{#5+360*(\i+1)/#1}%
+  \pgfmathsetmacro{\aem}{#5+360*(\i-0.5)/#1}%
+  \pgfmathsetmacro{\aep}{#5+360*(\i+0.5)/#1}%
+  \pgfmathsetmacro{\visE}{ifthenelse(sin(\aep)<0.01,1,0)}%
+  \pgfmathsetmacro{\visV}{ifthenelse(or(sin(\aep)<0.01,sin(\aem)<0.01),1,0)}%
+  \ifnum\visE=1 \draw[thick] ({#2*cos(\aa)},{#2*#3*sin(\aa)})--({#2*cos(\ab)},{#2*#3*sin(\ab)});\fi
+  \ifnum\visV=1 \draw[thick] ({#2*cos(\aa)},{#2*#3*sin(\aa)})--(0,#4);\fi}}
+% κύλινδρος: ακτίνα r, συμπίεση s, ύψος h
+\providecommand{\binCyl}[3]{%
+ \draw[dashed,gray] (#1,0) arc[start angle=0,end angle=180,x radius=#1,y radius=#1*#2];
+ \draw[thick] (-#1,0) arc[start angle=180,end angle=360,x radius=#1,y radius=#1*#2];
+ \draw[thick] (-#1,0)--(-#1,#3) (#1,0)--(#1,#3);
+ \filldraw[fill=gblue!18,thick] (0,#3) ellipse[x radius=#1,y radius=#1*#2];}
+% κώνος: ακτίνα r, συμπίεση s, ύψος h
+\providecommand{\binCone}[3]{%
+ \draw[dashed,gray] (#1,0) arc[start angle=0,end angle=180,x radius=#1,y radius=#1*#2];
+ \draw[thick] (-#1,0) arc[start angle=180,end angle=360,x radius=#1,y radius=#1*#2];
+ \draw[thick] (-#1,0)--(0,#3)--(#1,0);}
+% σφαίρα ακτίνας r
+\providecommand{\binSph}[1]{%
+ \filldraw[fill=gblue!10,thick] (0,0) circle (#1);
+ \draw[dashed,gray] (#1,0) arc[start angle=0,end angle=180,x radius=#1,y radius=#1*0.3];
+ \draw[thick] (-#1,0) arc[start angle=180,end angle=360,x radius=#1,y radius=#1*0.3];}
+% ανάπτυγμα από μοναδιαία τετράγωνα: λίστα x/y
+\providecommand{\binNet}[1]{\foreach \bnx/\bny in {#1}{\filldraw[fill=gblue!12,thick] (\bnx,\bny) rectangle +(1,1);}}
+
+\kefalaio{Γεωμετρία του χώρου}{Τα σχήματα που μπορείς να πιάσεις στα χέρια σου}{%
+\begin{tabular}{@{}l@{\hspace{1em}}p{0.82\linewidth}@{}}
+4.1 & Βασικά στερεά: ορθό πρίσμα, παραλληλεπίπεδο, κύβος, πυραμίδα, κύλινδρος, κώνος, σφαίρα\\[2pt]
+ & Επανάληψη του κεφαλαίου\\
+\end{tabular}}
+\input{B/k4/p1}
+\input{B/k4/epan}
