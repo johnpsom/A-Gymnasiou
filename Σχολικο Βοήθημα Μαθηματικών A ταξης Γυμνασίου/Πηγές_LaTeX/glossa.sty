@@ -25,6 +25,10 @@
 \RequirePackage{icomma}      % δεκαδικό κόμμα χωρίς κενό στα μαθηματικά
 \RequirePackage{microtype}
 \RequirePackage{needspace}
+% \need{len}: αν δεν υπάρχει χώρος len στη σελίδα, αλλαγή σελίδας. Δεν βάζει κανένα σημείο αλλαγής όταν υπάρχει χώρος (το Needspace βάζει penalty-100 που άφηνε τίτλους μόνους)
+\makeatletter
+\newcommand{\need}[1]{\par\penalty\@M\ifdim\pagegoal<\maxdimen\dimen@=\pagegoal\advance\dimen@-\pagetotal\ifdim\dimen@<#1\ifdim\dimen@>\z@\vfil\penalty-10000\fi\fi\fi}
+\makeatother
 \RequirePackage{longtable}
 \setlength{\LTpre}{0.4em}\setlength{\LTpost}{0.2em}
 \RequirePackage[hidelinks]{hyperref}
@@ -111,12 +115,12 @@
 \newcommand{\paragrafosz}[2]{\setcounter{section}{-1}\paragrafos{#1}{#2}}
 
 % \ypotmima{Α}{τίτλος}: υποδιαίρεση μιας μεγάλης παραγράφου (η αρίθμηση ασκήσεων συνεχίζεται)
-\newcommand{\ypotmima}[2]{\par\Needspace{9\baselineskip}\vspace{2.5ex}%
+\newcommand{\ypotmima}[2]{\par\need{9\baselineskip}\vspace{2.5ex}%
   {\color{gblue}\bfseries\Large #1.\ #2}\par\vspace{0.3ex}{\color{gblue}\hrule height 0.8pt}\vspace{1.5ex}\par}
 
 % ---------- τίτλοι ενοτήτων μέσα στο κεφάλαιο ----------
-\newcommand{\tmima}[1]{\par\Needspace{15\baselineskip}\vspace{1.2ex}{\color{gblue}\bfseries\large #1}\par\nopagebreak\vspace{0.4ex}}
-\newcommand{\tmimasmall}[1]{\par\Needspace{4\baselineskip}\vspace{0.8ex}{\bfseries #1}\par\nopagebreak}
+\newcommand{\tmima}[1]{\par\need{10\baselineskip}\vspace{1.2ex}{\color{gblue}\bfseries\large #1}\par\nopagebreak\vspace{0.4ex}}
+\newcommand{\tmimasmall}[1]{\par\need{4\baselineskip}\vspace{0.8ex}{\bfseries #1}\par\nopagebreak}
 
 % ---------- κουτιά ----------
 \newtcolorbox{anagkebox}{enhanced,breakable,colback=gblueL,colframe=gblueL,
@@ -124,22 +128,22 @@
   left=10pt,right=8pt,top=7pt,bottom=7pt,fontupper=\itshape\small\linespread{1.15}\selectfont}
 \newenvironment{anagke}{\tmima{Η ανάγκη}\begin{anagkebox}}{\end{anagkebox}}
 
-\newtcolorbox[]{lexibox}[1]{enhanced,breakable,colback=white,colframe=gblue,boxrule=0.6pt,arc=2pt,
+\newtcolorbox[]{lexibox}[1]{enhanced,unbreakable,colback=white,colframe=gblue,boxrule=0.6pt,arc=2pt,
   title={#1},coltitle=white,colbacktitle=gblue,fonttitle=\bfseries\small,
   left=8pt,right=8pt,top=6pt,bottom=6pt}
 \newenvironment{lexi}[2]{\tmima{Η λέξη: #1}\begin{lexibox}{Η λέξη: #2}}{\end{lexibox}}
 
-\newtcolorbox{kanonasbox}[1]{enhanced,breakable,colback=gblueL!35,colframe=gdark,boxrule=0.6pt,arc=2pt,
+\newtcolorbox{kanonasbox}[1]{enhanced,unbreakable,colback=gblueL!35,colframe=gdark,boxrule=0.6pt,arc=2pt,
   title={#1},coltitle=white,colbacktitle=gdark,fonttitle=\bfseries\small,
   left=8pt,right=8pt,top=6pt,bottom=6pt}
-\newenvironment{kanonas}[1]{\begin{kanonasbox}{Κανόνας: #1}}{\end{kanonasbox}}
-\newenvironment{orismos}[1]{\begin{kanonasbox}{Ορισμός: #1}}{\end{kanonasbox}}
-\newenvironment{idiotita}[1]{\begin{kanonasbox}{Ιδιότητα: #1}}{\end{kanonasbox}}
+\newenvironment{kanonas}[1]{\par\nopagebreak\begin{kanonasbox}{Κανόνας: #1}}{\end{kanonasbox}}
+\newenvironment{orismos}[1]{\par\nopagebreak\begin{kanonasbox}{Ορισμός: #1}}{\end{kanonasbox}}
+\newenvironment{idiotita}[1]{\par\nopagebreak\begin{kanonasbox}{Ιδιότητα: #1}}{\end{kanonasbox}}
 
-\newtcolorbox{prosoxibox}[1]{enhanced,breakable,colback=gwarm,colframe=gwarmD,boxrule=0.6pt,arc=2pt,
+\newtcolorbox{prosoxibox}[1]{enhanced,unbreakable,colback=gwarm,colframe=gwarmD,boxrule=0.6pt,arc=2pt,
   title={#1},coltitle=white,colbacktitle=gwarmD,fonttitle=\bfseries\small,
   left=8pt,right=8pt,top=6pt,bottom=6pt}
-\newenvironment{prosoxi}[1][Προσοχή: συνηθισμένο λάθος]{\begin{prosoxibox}{#1}}{\end{prosoxibox}}
+\newenvironment{prosoxi}[1][Προσοχή: συνηθισμένο λάθος]{\par\nopagebreak\begin{prosoxibox}{#1}}{\end{prosoxibox}}
 
 \newcommand{\lexiword}[1]{\textbf{#1}}
 
@@ -164,13 +168,13 @@
   \refstepcounter{paradeigma}%
   \par\vspace{1ex}\noindent\textbf{Παράδειγμα \exprefix.\theparadeigma\enspace #1}\par\nopagebreak}
 \newcommand{\tixero}{\textbf{Τι ξέρω.}\ }
-\newcommand{\tithelo}{\textbf{Τι θέλω.}\ }
-\newcommand{\possindeo}{\textbf{Πώς τα συνδέω.}\ }
-\newcommand{\apantisi}{\textbf{Απάντηση.}\ }
-\newcommand{\elegxos}{\textbf{Έλεγχος.}\ }
+\newcommand{\tithelo}{\nopagebreak\textbf{Τι θέλω.}\ }
+\newcommand{\possindeo}{\nopagebreak\textbf{Πώς τα συνδέω.}\ }
+\newcommand{\apantisi}{\nopagebreak\textbf{Απάντηση.}\ }
+\newcommand{\elegxos}{\nopagebreak\textbf{Έλεγχος.}\ }
 
 % ---------- ασκήσεις ----------
-\newcommand{\zoni}[2]{\par\Needspace{7\baselineskip}\vspace{1.4ex}\noindent{\color{gblue}\bfseries\large #1}\hspace{1.2em}{\color{ggray}\small #2}\par\nopagebreak\vspace{0.4ex}}
+\newcommand{\zoni}[2]{\par\need{7\baselineskip}\vspace{1.4ex}\noindent{\color{gblue}\bfseries\large #1}\hspace{1.2em}{\color{ggray}\small #2}\par\nopagebreak\vspace{0.4ex}}
 \newcommand{\ex}[1][]{%
   \refstepcounter{exer}%
   \par\vspace{0.5ex}\noindent\hangindent=3.6em\hangafter=1
@@ -180,10 +184,10 @@
 
 % ---------- λύσεις ----------
 \newcommand{\solprefix}{}
-\newcommand{\lyseismeros}[2]{\par\Needspace{14\baselineskip}\vspace{3ex}{\color{gblue}\bfseries\Large Μέρος #1΄: #2}\par\vspace{1ex}}
-\newcommand{\lyseiskef}[2]{\par\Needspace{12\baselineskip}\vspace{2.5ex}{\color{gblue}\bfseries\large Κεφάλαιο #1: #2}\par\vspace{0.5ex}}
-\newcommand{\lyseis}[2]{\renewcommand{\solprefix}{#1}\par\Needspace{4\baselineskip}\vspace{1.5ex}\noindent{\bfseries Παράγραφος #1\enspace #2}\par\nopagebreak\vspace{0.3ex}}
-\newcommand{\lyseisE}[1]{\par\Needspace{4\baselineskip}\vspace{1.5ex}\noindent{\bfseries #1}\par\nopagebreak\vspace{0.3ex}}
+\newcommand{\lyseismeros}[2]{\par\need{26\baselineskip}\vspace{3ex}{\color{gblue}\bfseries\Large Μέρος #1΄: #2}\par\vspace{1ex}}
+\newcommand{\lyseiskef}[2]{\par\need{12\baselineskip}\vspace{2.5ex}{\color{gblue}\bfseries\large Κεφάλαιο #1: #2}\par\vspace{0.5ex}}
+\newcommand{\lyseis}[2]{\renewcommand{\solprefix}{#1}\par\need{4\baselineskip}\vspace{1.5ex}\noindent{\bfseries Παράγραφος #1\enspace #2}\par\nopagebreak\vspace{0.3ex}}
+\newcommand{\lyseisE}[1]{\par\need{4\baselineskip}\vspace{1.5ex}\noindent{\bfseries #1}\par\nopagebreak\vspace{0.3ex}}
 \newcommand{\sol}[1]{\par\vspace{0.35ex}\noindent\textbf{\solprefix.#1}\enspace}
 \newcommand{\solr}[2]{\par\vspace{0.35ex}\noindent\textbf{Ε#1.#2}\enspace}
 
